@@ -28,20 +28,20 @@ from mstrio.server.environment import Environment
 # ---------------------------------------------------------------------------
 CONFIG = {
     # Source environment
-    "source_base_url": "http://10.146.13.58:8080/MicroStrategyLibrary/",
-    "source_username": "adminbiss",
-    "source_password": "M$tr2026",
+    "source_base_url": "https://controlling-plattform-test.cloud.strategy.com/MicroStrategyLibrary/",
+    "source_username": "Administrator-BICO",
+    "source_password": "BIadminCO",
     "source_login_mode": 1,
 
     # Target environment
-    "target_base_url": "http://10.146.13.45:8080/MicroStrategyLibrary",
-    "target_username": "tempadmin",
-    "target_password": "M$tr2026",
+    "target_base_url": "https://controlling.cloud.strategy.com/MicroStrategyLibrary/",
+    "target_username": "Administrator-BICO",
+    "target_password": "BIadminCO",
     "target_login_mode": 1,
 
     # Duplication settings
-    "source_project": "Betriebsnummernservice",
-    "target_project": "Betriebsnummernservice Backup Test",
+    "source_project": "Test Project (Roman)",
+    "target_project": "Test Project (Roman) 2026-04-16",
     "match_users_by_login": False,
     "sync_with_target_env": True,
     "timeout_minutes": 60,
@@ -118,18 +118,17 @@ def run_duplication() -> int:
     except Exception as exc:
         error_str = str(exc)
         print(f"[ERROR] Duplication test failed: {exc}")
-        if "ERR001" in error_str and "duplication status" in error_str.lower():
+        if "ERR001" in error_str and ("duplication status" in error_str.lower() or "export job" in error_str.lower()):
             print()
-            print("[DIAGNOSTIC] This error typically means StorageService is not configured")
-            print("             between the two environments.")
-            print("             To fix this:")
-            print("             1. On the SOURCE environment, go to:")
-            print("                Administration > Storage Service > Settings")
-            print("                and configure a shared storage location.")
-            print("             2. On the TARGET environment, configure the same")
-            print("                shared storage location.")
-            print("             3. Ensure both environments can reach the storage.")
-            print("             4. Re-run this script once StorageService is set up.")
+            print("[DIAGNOSTIC] StorageService not configured between environments.")
+            print("             Configure shared storage and re-run.")
+        elif "ERR006" in error_str and "already been a project duplication" in error_str:
+            print()
+            print("[DIAGNOSTIC] A duplication job with that ID is already pending.")
+            print("             Try one of:")
+            print("             1. Wait a few minutes for the pending job to complete")
+            print("             2. Use a different target project name (edit CONFIG above)")
+            print("             3. Check the target environment's job queue in the admin UI")
         return 1
 
     finally:
