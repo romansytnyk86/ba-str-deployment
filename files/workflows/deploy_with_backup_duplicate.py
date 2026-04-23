@@ -34,23 +34,12 @@ Settings used from deployment.env:
 """
 
 import logging
-import tempfile
 import time
+import traceback
 from datetime import datetime
-from pathlib import Path
-from time import sleep
 from typing import Optional
 from config import AppConfig, MstrConfig
 from mstrio.server.project import CrossDuplicationConfig, Project, ProjectDuplication
-from mstrio.object_management import full_search
-from mstrio.object_management.migration import Migration
-from mstrio.object_management.migration.package import (
-    Action,
-    PackageConfig,
-    PackageContentInfo,
-    PackageSettings,
-    PackageType,
-)
 
 from mstr import (
     mstr_connection,
@@ -182,48 +171,41 @@ def run(cfg: AppConfig, backup_month: str, target_mstr: Optional[MstrConfig] = N
                         logger.error("  [DIAGNOSTIC] StorageService is likely not configured between the two environments.")
                         logger.error("  To fix: configure a shared Storage Service location on both source and target")
                         logger.error("  environments (Administration > Storage Service > Settings), then re-run.")
-                    import traceback
                     logger.debug(traceback.format_exc())
                     steps_ok.append(("Duplicate to target environment", False))
                     return _summary(steps_ok, start)
             elif cfg.project.backup_method == "package":
-                logger.info(f"\n[Step 2/5] Create project package from {cfg.mstr.base_url} and migrate to {target_mstr.base_url}")
+                logger.info(f"\n[Step 2/5] Create project package from {cfg.mstr.base_url} and restore on {target_mstr.base_url}")
                 try:
                     source_project = Project(source_conn, name=project)
-                    # Create project migration
-                    migration = Migration.create(
-                        connection=source_conn,
-                        body={
-                            "packageInfo": {
-                                "name": f"{backup_project} Package",
-                                "type": "object_migration",
-                                "purpose": "object"
-                            }
-                        },
-                        project=source_project
-                    )
-                    logger.info(f"  Created project migration: {migration.id}")
-                    
-                    # Migrate to target environment
-                    logger.info("  Migrating project to target environment...")
-                    ok = migration.migrate(
+                    # sync_with_target_env=False triggers source-side package creation only
+                    # (no shared StorageService required). The package is then restored
+                    # on the target environment in a second step.
+                    job = source_project.duplicate_to_other_environment(
+                        target_name=backup_project,
                         target_env=target_conn,
-                        target_project_name=backup_project,
-                        generate_undo=False
+                        cross_duplication_config=CrossDuplicationConfig(
+                            match_users_by_login=cfg.project.duplicate_match_users_by_login
+                        ),
+                        sync_with_target_env=False,
                     )
-                    if not ok:
-                        logger.error(f"  [ERROR] Project migration failed.")
-                    else:
-                        logger.info(f"  Project migration completed successfully.")
-
-                    steps_ok.append(("Migrate project package to target environment", ok))
+                    logger.info(f"  Source job ID: {job.id} | Initial status: {job.status}")
+                    ok = _poll_cross_env_duplication(job)
+                    if ok:
+                        logger.info("  Restoring package on target environment...")
+                        target_job = job.restore_package_on_target_environment(
+                            target_env=target_conn
+                        )
+                        logger.info(f"  Target job ID: {target_job.id} | Initial status: {target_job.status}")
+                        ok = _poll_cross_env_duplication(target_job)
+                    steps_ok.append(("Create project package and restore on target environment", ok))
                     if not ok:
                         logger.error("  Aborting workflow due to step failure.")
                         return _summary(steps_ok, start)
                 except Exception as exc:
                     logger.error(f"  [ERROR] Project package migration failed: {exc}")
-                    import traceback; logger.debug(traceback.format_exc())
-                    steps_ok.append(("Migrate project package to target environment", False))
+                    logger.debug(traceback.format_exc())
+                    steps_ok.append(("Create project package and restore on target environment", False))
                     return _summary(steps_ok, start)
             else:
                 logger.error(f"  [ERROR] Unsupported BACKUP_METHOD for cross-environment: {cfg.project.backup_method}")
@@ -354,14 +336,14 @@ def run(cfg: AppConfig, backup_month: str, target_mstr: Optional[MstrConfig] = N
 
         # ── Step 7: Update schemas ───────────────────────────────────
         if cfg.enable_schema_update:
-            logger.info("\n[Step 7/8] Update schema for main project")
+            logger.info("\n[Step 7a/8] Update schema for main project")
             ok = update_schema(conn, cfg.project.project_id)
             steps_ok.append(("Update schema main", ok))
             if not ok:
                 logger.error("  Aborting workflow due to step failure.")
                 return _summary(steps_ok, start)
 
-            logger.info("\n[Step 7/8] Update schema for backup project")
+            logger.info("\n[Step 7b/8] Update schema for backup project")
             backup_proj = Project(conn, name=backup_project)
             ok = update_schema(conn, backup_proj.id)
             steps_ok.append(("Update schema backup", ok))

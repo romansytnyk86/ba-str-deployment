@@ -39,11 +39,12 @@ import traceback
 from datetime import datetime
 from logging.handlers import RotatingFileHandler
 from pathlib import Path
+from typing import Optional
 
 
 # ── Internal state ────────────────────────────────────────────────────────────
 # Stored so the run footer can report elapsed time
-_run_start: datetime | None = None
+_run_start: Optional[datetime] = None
 _run_command: str = ""
 
 

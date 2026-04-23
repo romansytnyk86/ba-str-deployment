@@ -44,7 +44,7 @@ def alter_db_connection_catalog(
         )
 
         ds_conn.alter(connection_string=updated_string)
-        ds_conn.fetch("connection_string")
+        ds_conn.fetch()
 
         logger.info(f"  [OK] Catalog updated to '{new_catalog}'")
         logger.debug(f"  Updated connection string: {ds_conn.connection_string}")

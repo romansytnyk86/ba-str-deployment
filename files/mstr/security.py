@@ -39,9 +39,6 @@ def revoke_security_role(
         user_group = UserGroup(conn, name=group_name)
         project = Project(conn, name=project_name)
 
-        # Ensure the connection is set to the correct project
-        conn.project_id = project.id
-
         security_role.revoke_from(members=[user_group], project=project)
 
         logger.info(f"  [OK] Revoked '{role_name}' from '{group_name}'")
