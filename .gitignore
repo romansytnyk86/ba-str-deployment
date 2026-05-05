@@ -1,0 +1,29 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+
+# Credentials — never commit
+deployment*.env
+credentials*.env
+*.env
+!*.env.example
+
+# Deployment lock file
+.deployment_lock
+
+# Logs
+*.log
+logs/
+LOG_*.txt
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
