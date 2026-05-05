@@ -2,6 +2,92 @@
 
 A general-purpose Python tool for deploying Strategy projects with or without backups.
 
+---
+
+## Umgebungsrouting (Quelle → Ziel)
+
+Das Tool unterstützt ein **Routing-Modell**: In Jenkins (oder auf der Kommandozeile) werden
+nur Quell- und Ziel-Umgebung angegeben. Der korrekte Workflow, die richtigen
+Konfigurationsdateien und alle Zusatzschritte werden automatisch ermittelt.
+
+### Routing-Matrix
+
+Die Matrix entspricht der fachlichen Freigabematrix:
+
+| Quelle       | Ziel            | Backup-Monat | Was passiert                                               |
+|:-------------|:----------------|:------------:|:-----------------------------------------------------------|
+| Design       | Design          | erforderlich | Backupprojekt-Duplizierung mit Vormonatssuffix (gleiche Umgebung) |
+| Design       | Abnahme         | nicht nötig  | Versorgung Projekte ggf. mit Merge (cross-env)             |
+| Design       | Integration     | erforderlich | Backup-Duplizierung (dacg) + Versorgung ggf. mit Merge (cross-env) |
+| Integration  | Freigabe        | nicht nötig  | Versorgung Projekte ggf. mit Merge (cross-env)             |
+| Integration  | Bereitstellung  | nicht nötig  | Versorgung Projekte ggf. mit Merge (cross-env)             |
+
+Alle anderen Kombinationen werden mit einer klaren Fehlermeldung abgelehnt.
+
+### "Versorgung ggf. mit Merge"
+
+Die konkrete Übertragungs-Methode (Duplizierung, Merge oder Package) richtet sich nach
+`BACKUP_METHOD` in der Quell-`.env`-Datei:
+
+| `BACKUP_METHOD` | Was passiert                                            |
+|:----------------|:--------------------------------------------------------|
+| `duplicate`     | Projekt wird dupliziert (Standard)                      |
+| `merge`         | Projekt wird gemergt (sobald von mstrio unterstützt)    |
+| `package`       | Paket-Migration (nur cross-env)                         |
+
+### Konfigurationsdateien pro Umgebung
+
+Für jede Umgebung wird eine eigene `.env`-Datei im `files/`-Verzeichnis erwartet:
+
+| Umgebung       | Konfigurationsdatei            |
+|:---------------|:-------------------------------|
+| Design         | `files/deployment_design.env`         |
+| Abnahme        | `files/deployment_abnahme.env`        |
+| Integration    | `files/deployment_integration.env`    |
+| Freigabe       | `files/deployment_freigabe.env`       |
+| Bereitstellung | `files/deployment_bereitstellung.env` |
+
+Die Dateinamen sind in `files/routing.py` unter `ENVIRONMENT_CONFIGS` konfiguriert
+und können dort angepasst werden.
+
+### Jenkins-Verwendung
+
+Typische Jenkins-Parameter:
+
+```
+SOURCE_ENV      = Design / Integration / ...
+TARGET_ENV      = Design / Abnahme / Integration / Freigabe / Bereitstellung
+BACKUP_MONTH    = 202604   (nur wenn für die Route erforderlich)
+DRY_RUN         = true / false
+```
+
+Jenkins-Kommando:
+
+```bash
+# Design → Integration mit Backup-Monat
+python main.py --source-env Design --target-env Integration --backup-month 202604
+
+# Integration → Freigabe (kein Backup-Monat nötig)
+python main.py --source-env Integration --target-env Freigabe
+
+# Vorschau ohne Ausführung
+python main.py --source-env Design --target-env Integration --backup-month 202604 --dry-run
+
+# Alle definierten Routen anzeigen
+python main.py --show-routes
+```
+
+### Verhalten bei Fehlern
+
+| Situation                            | Verhalten                                         |
+|:-------------------------------------|:--------------------------------------------------|
+| Ungültige Kombination (z. B. Abnahme → Design) | Sofortiger Abbruch mit Fehlermeldung + Liste gültiger Routen |
+| Backup-Monat fehlt, aber erforderlich | Sofortiger Abbruch mit Fehlermeldung              |
+| Phase 1 von 2 schlägt fehl           | Phase 2 wird nicht gestartet; Log zeigt Fehler    |
+| Unbekannte Umgebung angegeben        | Sofortiger Abbruch mit Fehlermeldung + bekannte Umgebungen |
+
+---
+
 ## What it replaces
 
 | Original file | Replaced by |
@@ -20,7 +106,20 @@ pip install -r requirements.txt
 
 ## Configuration
 
-Edit `files/deployment.env`:
+Edit `files/deployment.env`. The key settings are:
+
+| Key | Description |
+|-----|-------------|
+| `MSTR_BASE_URL` | Full URL to the Strategy Library REST endpoint |
+| `MSTR_USERNAME` / `MSTR_PASSWORD` | Administrator credentials |
+| `MSTR_PROJECT_NAME` | The project being deployed |
+| `DB_CONNECTION_NAME` / `DB_CATALOG_NAME` | DB connection to alter and new catalog name |
+| `CREATE_BACKUP` | `true` = create backup copy first, `false` = redeploy only |
+| `BACKUP_MONTH` | Suffix appended to the backup project name (e.g. `202512`) |
+| `REVOKE_ROLE_GROUP_PAIRS` | `Role\|Group` pairs to revoke from backup, comma-separated |
+| `TARGET_MSTR_BASE_URL` / `TARGET_MSTR_USERNAME` / `TARGET_MSTR_PASSWORD` | Optional second server for cross-environment duplication |
+
+Minimal example:
 
 ```env
 MSTR_BASE_URL=http://your-server:8080/MicroStrategyLibrary
@@ -61,9 +160,75 @@ python main.py --dry-run
 python main.py --backup-month 202512 --dry-run
 ```
 
+## Project Groups (release plans)
+
+When deploying multiple projects together, use `plan_template.py` as the basis
+for each release plan. It supports named **project groups** so you can define a
+set of projects once and reuse the name wherever a project list is needed.
+
+### Defining groups
+
+At the top of your copied plan file, populate `PROJECT_GROUPS`:
+
+```python
+PROJECT_GROUPS = {
+    "SGB II": [
+        "SGB II S2S",
+        "SGB II S2S ZD",
+        "SGB II Falke Rechtsbehelfe",
+        "SGB II MaEnde",
+    ],
+    "SGB III": [
+        "SGB III BioData 2026",
+        "SGB III GPZ 2025",
+    ],
+    "SGB III kal": [
+        "SGB III BioData 2026",
+        "SGB III Bio LBB",
+    ],
+}
+```
+
+### Using groups
+
+Use `get_project_group("Group Name")` anywhere a list of projects is expected:
+
+```python
+PLAN = {
+    # Combine multiple groups for the full project scope
+    "projects": get_project_group("SGB II") + get_project_group("SGB III"),
+
+    # Batches can reference groups directly
+    "project_batches": [
+        get_project_group("SGB II"),
+        get_project_group("SGB III"),
+    ],
+
+    "start_phase_2": {
+        "merges": [
+            # Only merge SGB II projects
+            {"source_project": p, "target_project": p, "enabled": True}
+            for p in get_project_group("SGB II")
+        ],
+        "schema_update_projects": get_project_group("SGB II") + get_project_group("SGB III"),
+    },
+}
+```
+
+`get_project_group()` falls back gracefully — if the name is not a defined group
+it returns `[name]`, so you can pass individual project names the same way:
+
+```python
+"cache_cleanup_projects": get_project_group("SGB II S2S Relational"),
+# → ["SGB II S2S Relational"]
+```
+
+---
+
 ## Features
 
 - **Flexible workflows**: Choose between redeployment only or with project backup
+- **Project groups**: Define named sets of projects in your release plan and reuse them everywhere
 - **Cross-environment support**: Duplicate projects to different Strategy servers
 - **Security management**: Automatically revoke user access from backup projects
 - **Comprehensive logging**: Detailed logs with timestamps and error tracking

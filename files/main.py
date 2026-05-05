@@ -26,6 +26,15 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from config import load_config, MstrConfig
 from utils.logger import setup_logger
 from utils.logger import log_run_footer
+from routing import (
+    get_route,
+    get_env_config,
+    describe_routing_matrix,
+    WORKFLOW_WITHOUT_BACKUP,
+    WORKFLOW_BACKUP_DUPLICATE,
+    WORKFLOW_VERSORGUNG_MERGE,
+    WORKFLOW_BACKUP_DUPLICATE_THEN_VERSORGUNG_MERGE,
+)
 import workflows.deploy_without_backup as workflow_ohne
 import workflows.deploy_with_backup_duplicate as workflow_mit
 import workflows.deploy_with_backup_merge as workflow_merge
@@ -117,6 +126,37 @@ Examples:
         type=int,
         default=1,
         help="Target environment login mode (default: 1)",
+    )
+
+    # ── Routing-based invocation (Quelle/Ziel-Matrix) ─────────────────────
+    routing_group = parser.add_argument_group(
+        "Umgebungsrouting (Quelle/Ziel)",
+        description=(
+            "Alternativ zu --env und --create-backup: Quelle und Ziel angeben. "
+            "Der korrekte Workflow wird automatisch aus der Routing-Matrix gewählt. "
+            "Beispiel: --source-env Design --target-env Integration --backup-month 202604"
+        ),
+    )
+    routing_group.add_argument(
+        "--source-env",
+        metavar="ENV",
+        help=(
+            "Quell-Umgebung (z. B. Design, Integration). "
+            "Muss zusammen mit --target-env angegeben werden."
+        ),
+    )
+    routing_group.add_argument(
+        "--target-env",
+        metavar="ENV",
+        help=(
+            "Ziel-Umgebung (z. B. Abnahme, Freigabe, Bereitstellung). "
+            "Muss zusammen mit --source-env angegeben werden."
+        ),
+    )
+    routing_group.add_argument(
+        "--show-routes",
+        action="store_true",
+        help="Zeigt alle definierten Routen der Routing-Matrix an und beendet das Programm.",
     )
 
     return parser
@@ -243,13 +283,164 @@ def print_dry_run_merge(cfg, backup_month: str) -> None:
     print("-" * 56)
 
 
+def _run_routing(args, parser) -> int:
+    """
+    Route-basierter Ausführungspfad: Quell- und Ziel-Umgebung sind bekannt.
+
+    Lädt die Konfigurationsdateien beider Umgebungen, ermittelt den Workflow
+    aus der Routing-Matrix und führt ihn aus — inklusive Dry-Run-Unterstützung.
+    """
+    try:
+        route = get_route(args.source_env, args.target_env)
+        source_env_cfg = get_env_config(args.source_env)
+        target_env_cfg = get_env_config(args.target_env)
+    except ValueError as exc:
+        parser.error(str(exc))
+
+    # Backup-Monat validieren
+    backup_month = args.backup_month
+    if route.backup_month_required and not backup_month:
+        parser.error(
+            f"Route '{args.source_env} → {args.target_env}' erfordert --backup-month "
+            f"(z. B. --backup-month 202604)."
+        )
+
+    # Quell-Konfiguration laden
+    cfg = load_config(env_file=source_env_cfg.env_file)
+
+    # Ziel-Konfiguration laden (nur Verbindungsdaten werden verwendet)
+    is_cross_env = args.source_env.lower() != args.target_env.lower()
+    target_cfg = None
+    if is_cross_env:
+        target_cfg = load_config(env_file=target_env_cfg.env_file)
+        cfg.target_mstr = target_cfg.mstr
+
+    # Überschreibe backup_month aus Kommandozeile falls angegeben
+    if backup_month:
+        cfg.backup_month = backup_month
+
+    command = f"{args.source_env}→{args.target_env}"
+    logger = setup_logger(cfg.log.log_dir, cfg.log.log_file_name, command=command)
+
+    logger.info("")
+    logger.info("#" * 60)
+    logger.info("  Strategy Deployment Tool  [Umgebungsrouting]")
+    logger.info(f"  {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
+    logger.info(f"  Quelle:   {args.source_env}  ({source_env_cfg.description})")
+    logger.info(f"  Ziel:     {args.target_env}  ({target_env_cfg.description})")
+    logger.info(f"  Route:    {route.description}")
+    logger.info(f"  Workflow: {route.workflow}")
+    logger.info(f"  Server:   {cfg.mstr.base_url}")
+    if is_cross_env and cfg.target_mstr:
+        logger.info(f"  Ziel-Srv: {cfg.target_mstr.base_url}")
+    if backup_month:
+        logger.info(f"  Backup:   {cfg.project.backup_base_name} {backup_month}")
+    if route.notes:
+        logger.info(f"  Hinweis:  {route.notes}")
+    logger.info("#" * 60)
+
+    if args.dry_run:
+        print(f"\n[DRY RUN] Routing: {args.source_env} → {args.target_env}")
+        print(f"  Route:    {route.description}")
+        print(f"  Workflow: {route.workflow}")
+        print(f"  Quelle-Env:  {source_env_cfg.env_file}  ({cfg.mstr.base_url})")
+        if is_cross_env and cfg.target_mstr:
+            print(f"  Ziel-Env:    {target_env_cfg.env_file}  ({cfg.target_mstr.base_url})")
+        if backup_month:
+            print(f"  Backup-Projekt: {cfg.project.backup_base_name} {backup_month}")
+        if route.notes:
+            print(f"  Hinweis: {route.notes}")
+        if route.workflow == WORKFLOW_BACKUP_DUPLICATE_THEN_VERSORGUNG_MERGE:
+            print_dry_run_mit(cfg, backup_month, target_mstr=cfg.target_mstr)
+            print("\n  [Schritt 2] Versorgung mit Merge (cross-env) würde danach folgen.")
+        elif route.workflow == WORKFLOW_BACKUP_DUPLICATE:
+            print_dry_run_mit(cfg, backup_month, target_mstr=cfg.target_mstr)
+        elif route.workflow == WORKFLOW_VERSORGUNG_MERGE:
+            print_dry_run_mit(cfg, backup_month or "(kein Backup)", target_mstr=cfg.target_mstr)
+        else:
+            print_dry_run_ohne(cfg)
+        return 0
+
+    # ── Workflow ausführen ────────────────────────────────────────────────
+
+    if route.workflow == WORKFLOW_WITHOUT_BACKUP:
+        success = workflow_ohne.run(cfg)
+        log_run_footer(success)
+        return 0 if success else 1
+
+    if route.workflow == WORKFLOW_BACKUP_DUPLICATE:
+        success = workflow_mit.run(
+            cfg,
+            backup_month=backup_month,
+            target_mstr=cfg.target_mstr,
+        )
+        log_run_footer(success)
+        return 0 if success else 1
+
+    if route.workflow == WORKFLOW_VERSORGUNG_MERGE:
+        # Versorgung cross-env: Methode (duplicate/merge/package) kommt aus BACKUP_METHOD in .env
+        success = workflow_mit.run(
+            cfg,
+            backup_month=backup_month or "",
+            target_mstr=cfg.target_mstr,
+        )
+        log_run_footer(success)
+        return 0 if success else 1
+
+    if route.workflow == WORKFLOW_BACKUP_DUPLICATE_THEN_VERSORGUNG_MERGE:
+        logger.info("")
+        logger.info("═" * 60)
+        logger.info("  PHASE 1/2: Backup-Duplizierung (dacg)")
+        logger.info("═" * 60)
+        success = workflow_mit.run(
+            cfg,
+            backup_month=backup_month,
+            target_mstr=cfg.target_mstr,
+        )
+        if not success:
+            logger.error("  Phase 1 fehlgeschlagen — Phase 2 wird nicht ausgeführt.")
+            log_run_footer(success)
+            return 1
+
+        logger.info("")
+        logger.info("═" * 60)
+        logger.info("  PHASE 2/2: Versorgung ggf. mit Merge (cross-env)")
+        logger.info("═" * 60)
+        success = workflow_mit.run(
+            cfg,
+            backup_month=backup_month,
+            target_mstr=cfg.target_mstr,
+        )
+        log_run_footer(success)
+        return 0 if success else 1
+
+    parser.error(f"Unbekannter Workflow-Typ in Routing-Matrix: '{route.workflow}'")
+    return 1  # unreachable
+
+
 def main() -> int:
     parser = build_parser()
     args = parser.parse_args()
 
+    # --show-routes: Routing-Matrix ausgeben und beenden
+    if getattr(args, "show_routes", False):
+        print(describe_routing_matrix())
+        return 0
+
     # Acquire lock to prevent concurrent deployments
     if not acquire_lock():
         return 1
+
+    # ── Route-basierter Pfad: --source-env + --target-env ─────────────────
+    if getattr(args, "source_env", None) or getattr(args, "target_env", None):
+        if not (args.source_env and args.target_env):
+            parser.error(
+                "--source-env und --target-env müssen immer zusammen angegeben werden."
+            )
+        try:
+            return _run_routing(args, parser)
+        finally:
+            release_lock()
 
     try:
         cfg = load_config(env_file=args.env)

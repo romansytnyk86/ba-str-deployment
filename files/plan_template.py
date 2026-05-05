@@ -7,7 +7,44 @@ Copy this file and customize for each release. Export a PLAN dict containing:
   - start_phase_1, start_phase_2, eval_phase, end_phase configurations
 
 All sections have defaults and examples below.
+
+PROJECT GROUPS
+--------------
+Use PROJECT_GROUPS to define reusable sets of projects and reference them via
+get_project_group() anywhere a project list is expected.
+
+Example:
+    PROJECT_GROUPS = {
+        "SGB II":      ["SGB II S2S", "SGB II S2S ZD", "SGB II S2S Relational", "SGB II S2S ZD CON"],
+        "SGB III":     ["SGB III BioData 2026", "SGB III GPZ 2026"],
+        "SGB III kal": ["SGB III BioData 2026", "SGB III Bio LBB"],
+    }
+
+    "projects": get_project_group("SGB II") + get_project_group("SGB III"),
+
+If the name is not in PROJECT_GROUPS it is returned as a single-item list so you
+can also use it for individual projects without a special case:
+    "projects": get_project_group("SGB II S2S"),
 """
+
+# ---------------------------------------------------------------------------
+# Define reusable project groups here.
+# Group names are arbitrary — choose names that match your release scope.
+# ---------------------------------------------------------------------------
+PROJECT_GROUPS: dict[str, list[str]] = {
+    "SGB II": ["SGB II S2S", "SGB II S2S ZD", "SGB II S2S Relational", "SGB II S2S ZD CON"],
+    "SGB III": ["SGB III BioData 2026", "SGB III GPZ 2026"],
+    "SGB III kal": ["SGB III BioData 2026", "SGB III Bio LBB"],
+}
+
+
+def get_project_group(name: str) -> list[str]:
+    """Return the project list for a named group, or [name] for individual projects."""
+    if name in PROJECT_GROUPS:
+        return PROJECT_GROUPS[name]
+    # Treat as a single project name so callers are consistent
+    return [part.strip() for part in name.split(",") if part.strip()]
+
 
 PLAN: dict = {
     # =========================================================================
@@ -23,17 +60,21 @@ PLAN: dict = {
     # =========================================================================
     # PROJECTS AND BATCHING
     # =========================================================================
-    "projects": [
-        # List all projects managed in this release 
-        "Project A",
-        "Project B",
-        "Project C",
-    ],
+    # List all projects managed in this release.
+    # Use get_project_group("Group Name") to expand a named group, or list
+    # project names directly. You can combine both:
+    #   get_project_group("SGB II") + get_project_group("SGB III")
+    "projects": (
+        get_project_group("Project A") +
+        get_project_group("Project B") +
+        get_project_group("Project C")
+    ),
 
     "project_batches": [
-        # Define load/unload order and grouping (batch pauses applied between)
-        ["Project A", "Project B"],
-        ["Project C"],
+        # Define load/unload order and grouping (batch pauses applied between).
+        # Use get_project_group() here too to keep batch definitions DRY.
+        get_project_group("Project A") + get_project_group("Project B"),
+        get_project_group("Project C"),
     ],
 
     # =========================================================================
