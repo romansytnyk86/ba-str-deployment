@@ -1,0 +1,55 @@
+{
+  "command": "preflight",
+  "started_at": "2026-04-23T16:08:59.512481",
+  "finished_at": "2026-04-23T16:09:02.948616",
+  "success": false,
+  "only_steps": [],
+  "skip_steps": [],
+  "steps": [
+    {
+      "step_id": 1,
+      "name": "connectivity",
+      "status": "failed",
+      "started_at": "2026-04-23T16:09:00.187055",
+      "finished_at": "2026-04-23T16:09:01.664615",
+      "duration_seconds": 1.478,
+      "details": ""
+    },
+    {
+      "step_id": 2,
+      "name": "projects",
+      "status": "success",
+      "started_at": "2026-04-23T16:09:01.664636",
+      "finished_at": "2026-04-23T16:09:02.098903",
+      "duration_seconds": 0.434,
+      "details": ""
+    },
+    {
+      "step_id": 3,
+      "name": "security",
+      "status": "success",
+      "started_at": "2026-04-23T16:09:02.098921",
+      "finished_at": "2026-04-23T16:09:02.521537",
+      "duration_seconds": 0.423,
+      "details": ""
+    },
+    {
+      "step_id": 4,
+      "name": "db_connections",
+      "status": "success",
+      "started_at": "2026-04-23T16:09:02.521552",
+      "finished_at": "2026-04-23T16:09:02.947698",
+      "duration_seconds": 0.426,
+      "details": ""
+    },
+    {
+      "step_id": 5,
+      "name": "merge_config",
+      "status": "success",
+      "started_at": "2026-04-23T16:09:02.947712",
+      "finished_at": "2026-04-23T16:09:02.948348",
+      "duration_seconds": 0.001,
+      "details": ""
+    }
+  ]
+}

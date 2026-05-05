@@ -1,0 +1,13 @@
+# ==============================================================================
+#  freigabe_skripte — Python Dependencies
+#
+#  Install with:
+#      pip install -r requirements.txt
+# ==============================================================================
+
+# MicroStrategy Python SDK — core library for all MSTR API calls
+# https://github.com/MicroStrategy/mstrio-py
+mstrio-py>=11.3.0
+
+# Loads credentials from deployment.env
+python-dotenv>=1.0.0

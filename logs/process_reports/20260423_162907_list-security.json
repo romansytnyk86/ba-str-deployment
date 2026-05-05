@@ -1,0 +1,19 @@
+{
+  "command": "list-security",
+  "started_at": "2026-04-23T16:29:04.592582",
+  "finished_at": "2026-04-23T16:29:07.502823",
+  "success": true,
+  "only_steps": [],
+  "skip_steps": [],
+  "steps": [
+    {
+      "step_id": 1,
+      "name": "list_security_objects",
+      "status": "success",
+      "started_at": "2026-04-23T16:29:05.267987",
+      "finished_at": "2026-04-23T16:29:07.500837",
+      "duration_seconds": 2.233,
+      "details": ""
+    }
+  ]
+}

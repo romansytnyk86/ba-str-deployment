@@ -1,0 +1,803 @@
+2026-04-23 16:03:51 | INFO     | ============================================================
+2026-04-23 16:03:51 | INFO     | RUN STARTED: 2026-04-23 16:03:51  |  command: preflight
+2026-04-23 16:03:51 | INFO     | ============================================================
+2026-04-23 16:03:51 | INFO     | Log file: C:\Users\rsytnyk\OneDrive - MicroStrategy, Inc\Documents\CUSTOMERS\Bundesagentur fuer Arbeit\Cloud Migration\python_scripts\wartungsfenster\freigabe_skripte\logs\freigabe_deployment.log
+2026-04-23 16:03:52 | INFO     | 
+2026-04-23 16:03:52 | INFO     | [Preflight 1/5] Validate connectivity to target and source
+2026-04-23 16:03:52 | DEBUG    | Opening connection -> https://controlling-plattform-test.cloud.strategy.com/MicroStrategyLibrary/ (user: Administrator, project: server-level)
+2026-04-23 16:03:52 | ERROR    | Failed to connect to https://controlling-plattform-test.cloud.strategy.com/MicroStrategyLibrary/: (Login failure); code: 'ERR003', ticket_id: 'db864912bca64650becf64ca87d72df9'
+2026-04-23 16:03:52 | DEBUG    | Traceback (most recent call last):
+  File "C:\Users\rsytnyk\OneDrive - MicroStrategy, Inc\Documents\CUSTOMERS\Bundesagentur fuer Arbeit\Cloud Migration\python_scripts\wartungsfenster\freigabe_skripte\files\mstr\connection.py", line 40, in mstr_connection
+    conn = Connection(
+        base_url=cfg.base_url,
+    ...<3 lines>...
+        **({"project_name": project_name} if project_name else {}),
+    )
+  File "C:\Users\rsytnyk\AppData\Local\Programs\Python\Python313\Lib\site-packages\mstrio\connection.py", line 382, in __init__
+    self.connect()
+    ~~~~~~~~~~~~^^
+  File "C:\Users\rsytnyk\AppData\Local\Programs\Python\Python313\Lib\site-packages\mstrio\connection.py", line 464, in connect
+    response = self._login()
+  File "C:\Users\rsytnyk\AppData\Local\Programs\Python\Python313\Lib\site-packages\mstrio\connection.py", line 759, in _login
+    raise e
+  File "C:\Users\rsytnyk\AppData\Local\Programs\Python\Python313\Lib\site-packages\mstrio\connection.py", line 746, in _login
+    return authentication.login(connection=self)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\Users\rsytnyk\AppData\Local\Programs\Python\Python313\Lib\site-packages\mstrio\utils\error_handlers.py", line 78, in inner
+    response_handler(response, **handler_kwargs)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\rsytnyk\AppData\Local\Programs\Python\Python313\Lib\site-packages\mstrio\utils\helper.py", line 334, in response_handler
+    raise IServerError(
+    ...<4 lines>...
+    )
+mstrio.helpers.IServerError: (Login failure); code: 'ERR003', ticket_id: 'db864912bca64650becf64ca87d72df9'
+
+2026-04-23 16:03:52 | ERROR    |   [ERROR] Target connectivity failed: (Login failure); code: 'ERR003', ticket_id: 'db864912bca64650becf64ca87d72df9'
+2026-04-23 16:03:52 | DEBUG    | Opening connection -> https://controlling.cloud.strategy.com/MicroStrategyLibrary/ (user: Administrator, project: server-level)
+2026-04-23 16:03:53 | ERROR    | Failed to connect to https://controlling.cloud.strategy.com/MicroStrategyLibrary/: (Login failure); code: 'ERR003', ticket_id: '3a593d8dbab44b63947637d3048a8289'
+2026-04-23 16:03:53 | DEBUG    | Traceback (most recent call last):
+  File "C:\Users\rsytnyk\OneDrive - MicroStrategy, Inc\Documents\CUSTOMERS\Bundesagentur fuer Arbeit\Cloud Migration\python_scripts\wartungsfenster\freigabe_skripte\files\mstr\connection.py", line 40, in mstr_connection
+    conn = Connection(
+        base_url=cfg.base_url,
+    ...<3 lines>...
+        **({"project_name": project_name} if project_name else {}),
+    )
+  File "C:\Users\rsytnyk\AppData\Local\Programs\Python\Python313\Lib\site-packages\mstrio\connection.py", line 382, in __init__
+    self.connect()
+    ~~~~~~~~~~~~^^
+  File "C:\Users\rsytnyk\AppData\Local\Programs\Python\Python313\Lib\site-packages\mstrio\connection.py", line 464, in connect
+    response = self._login()
+  File "C:\Users\rsytnyk\AppData\Local\Programs\Python\Python313\Lib\site-packages\mstrio\connection.py", line 759, in _login
+    raise e
+  File "C:\Users\rsytnyk\AppData\Local\Programs\Python\Python313\Lib\site-packages\mstrio\connection.py", line 746, in _login
+    return authentication.login(connection=self)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\Users\rsytnyk\AppData\Local\Programs\Python\Python313\Lib\site-packages\mstrio\utils\error_handlers.py", line 78, in inner
+    response_handler(response, **handler_kwargs)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\rsytnyk\AppData\Local\Programs\Python\Python313\Lib\site-packages\mstrio\utils\helper.py", line 334, in response_handler
+    raise IServerError(
+    ...<4 lines>...
+    )
+mstrio.helpers.IServerError: (Login failure); code: 'ERR003', ticket_id: '3a593d8dbab44b63947637d3048a8289'
+
+2026-04-23 16:03:53 | ERROR    |   [ERROR] Source connectivity failed: (Login failure); code: 'ERR003', ticket_id: '3a593d8dbab44b63947637d3048a8289'
+2026-04-23 16:03:53 | INFO     | 
+2026-04-23 16:03:53 | INFO     | [Preflight 2/5] Validate project existence on target
+2026-04-23 16:03:53 | DEBUG    | Opening connection -> https://controlling-plattform-test.cloud.strategy.com/MicroStrategyLibrary/ (user: Administrator, project: server-level)
+2026-04-23 16:03:53 | ERROR    | Failed to connect to https://controlling-plattform-test.cloud.strategy.com/MicroStrategyLibrary/: (Login failure); code: 'ERR003', ticket_id: 'bf3ee3f8b3b94415b4b2a552ceb84dea'
+2026-04-23 16:03:53 | DEBUG    | Traceback (most recent call last):
+  File "C:\Users\rsytnyk\OneDrive - MicroStrategy, Inc\Documents\CUSTOMERS\Bundesagentur fuer Arbeit\Cloud Migration\python_scripts\wartungsfenster\freigabe_skripte\files\mstr\connection.py", line 40, in mstr_connection
+    conn = Connection(
+        base_url=cfg.base_url,
+    ...<3 lines>...
+        **({"project_name": project_name} if project_name else {}),
+    )
+  File "C:\Users\rsytnyk\AppData\Local\Programs\Python\Python313\Lib\site-packages\mstrio\connection.py", line 382, in __init__
+    self.connect()
+    ~~~~~~~~~~~~^^
+  File "C:\Users\rsytnyk\AppData\Local\Programs\Python\Python313\Lib\site-packages\mstrio\connection.py", line 464, in connect
+    response = self._login()
+  File "C:\Users\rsytnyk\AppData\Local\Programs\Python\Python313\Lib\site-packages\mstrio\connection.py", line 759, in _login
+    raise e
+  File "C:\Users\rsytnyk\AppData\Local\Programs\Python\Python313\Lib\site-packages\mstrio\connection.py", line 746, in _login
+    return authentication.login(connection=self)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\Users\rsytnyk\AppData\Local\Programs\Python\Python313\Lib\site-packages\mstrio\utils\error_handlers.py", line 78, in inner
+    response_handler(response, **handler_kwargs)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\rsytnyk\AppData\Local\Programs\Python\Python313\Lib\site-packages\mstrio\utils\helper.py", line 334, in response_handler
+    raise IServerError(
+    ...<4 lines>...
+    )
+mstrio.helpers.IServerError: (Login failure); code: 'ERR003', ticket_id: 'bf3ee3f8b3b94415b4b2a552ceb84dea'
+
+2026-04-23 16:08:59 | INFO     | ============================================================
+2026-04-23 16:08:59 | INFO     | RUN STARTED: 2026-04-23 16:08:59  |  command: preflight
+2026-04-23 16:08:59 | INFO     | ============================================================
+2026-04-23 16:08:59 | INFO     | Log file: C:\Users\rsytnyk\OneDrive - MicroStrategy, Inc\Documents\CUSTOMERS\Bundesagentur fuer Arbeit\Cloud Migration\python_scripts\wartungsfenster\freigabe_skripte\logs\freigabe_deployment.log
+2026-04-23 16:09:00 | INFO     | 
+2026-04-23 16:09:00 | INFO     | [Preflight 1/5] Validate connectivity to target and source
+2026-04-23 16:09:00 | DEBUG    | Opening connection -> https://controlling-plattform-test.cloud.strategy.com/MicroStrategyLibrary/ (user: Administrator, project: server-level)
+2026-04-23 16:09:00 | ERROR    | Failed to connect to https://controlling-plattform-test.cloud.strategy.com/MicroStrategyLibrary/: (Login failure); code: 'ERR003', ticket_id: 'e1973d34fe464527a45a24646239f1d8'
+2026-04-23 16:09:00 | DEBUG    | Traceback (most recent call last):
+  File "C:\Users\rsytnyk\OneDrive - MicroStrategy, Inc\Documents\CUSTOMERS\Bundesagentur fuer Arbeit\Cloud Migration\python_scripts\wartungsfenster\freigabe_skripte\files\mstr\connection.py", line 40, in mstr_connection
+    conn = Connection(
+        base_url=cfg.base_url,
+    ...<3 lines>...
+        **({"project_name": project_name} if project_name else {}),
+    )
+  File "C:\Users\rsytnyk\AppData\Local\Programs\Python\Python313\Lib\site-packages\mstrio\connection.py", line 382, in __init__
+    self.connect()
+    ~~~~~~~~~~~~^^
+  File "C:\Users\rsytnyk\AppData\Local\Programs\Python\Python313\Lib\site-packages\mstrio\connection.py", line 464, in connect
+    response = self._login()
+  File "C:\Users\rsytnyk\AppData\Local\Programs\Python\Python313\Lib\site-packages\mstrio\connection.py", line 759, in _login
+    raise e
+  File "C:\Users\rsytnyk\AppData\Local\Programs\Python\Python313\Lib\site-packages\mstrio\connection.py", line 746, in _login
+    return authentication.login(connection=self)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\Users\rsytnyk\AppData\Local\Programs\Python\Python313\Lib\site-packages\mstrio\utils\error_handlers.py", line 78, in inner
+    response_handler(response, **handler_kwargs)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\rsytnyk\AppData\Local\Programs\Python\Python313\Lib\site-packages\mstrio\utils\helper.py", line 334, in response_handler
+    raise IServerError(
+    ...<4 lines>...
+    )
+mstrio.helpers.IServerError: (Login failure); code: 'ERR003', ticket_id: 'e1973d34fe464527a45a24646239f1d8'
+
+2026-04-23 16:09:00 | ERROR    |   [ERROR] Target connectivity failed: (Login failure); code: 'ERR003', ticket_id: 'e1973d34fe464527a45a24646239f1d8'
+2026-04-23 16:09:00 | DEBUG    | Opening connection -> https://controlling.cloud.strategy.com/MicroStrategyLibrary/ (user: s107_ctrl_platform_administrator, project: server-level)
+2026-04-23 16:09:01 | ERROR    | Failed to connect to https://controlling.cloud.strategy.com/MicroStrategyLibrary/: (Login failure); code: 'ERR003', ticket_id: 'a80d90f0a4b947289c66f2da87d29a96'
+2026-04-23 16:09:01 | DEBUG    | Traceback (most recent call last):
+  File "C:\Users\rsytnyk\OneDrive - MicroStrategy, Inc\Documents\CUSTOMERS\Bundesagentur fuer Arbeit\Cloud Migration\python_scripts\wartungsfenster\freigabe_skripte\files\mstr\connection.py", line 40, in mstr_connection
+    conn = Connection(
+        base_url=cfg.base_url,
+    ...<3 lines>...
+        **({"project_name": project_name} if project_name else {}),
+    )
+  File "C:\Users\rsytnyk\AppData\Local\Programs\Python\Python313\Lib\site-packages\mstrio\connection.py", line 382, in __init__
+    self.connect()
+    ~~~~~~~~~~~~^^
+  File "C:\Users\rsytnyk\AppData\Local\Programs\Python\Python313\Lib\site-packages\mstrio\connection.py", line 464, in connect
+    response = self._login()
+  File "C:\Users\rsytnyk\AppData\Local\Programs\Python\Python313\Lib\site-packages\mstrio\connection.py", line 759, in _login
+    raise e
+  File "C:\Users\rsytnyk\AppData\Local\Programs\Python\Python313\Lib\site-packages\mstrio\connection.py", line 746, in _login
+    return authentication.login(connection=self)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\Users\rsytnyk\AppData\Local\Programs\Python\Python313\Lib\site-packages\mstrio\utils\error_handlers.py", line 78, in inner
+    response_handler(response, **handler_kwargs)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\rsytnyk\AppData\Local\Programs\Python\Python313\Lib\site-packages\mstrio\utils\helper.py", line 334, in response_handler
+    raise IServerError(
+    ...<4 lines>...
+    )
+mstrio.helpers.IServerError: (Login failure); code: 'ERR003', ticket_id: 'a80d90f0a4b947289c66f2da87d29a96'
+
+2026-04-23 16:09:01 | ERROR    |   [ERROR] Source connectivity failed: (Login failure); code: 'ERR003', ticket_id: 'a80d90f0a4b947289c66f2da87d29a96'
+2026-04-23 16:09:01 | INFO     | 
+2026-04-23 16:09:01 | INFO     | [Preflight 2/5] Validate project existence on target
+2026-04-23 16:09:01 | DEBUG    | Opening connection -> https://controlling-plattform-test.cloud.strategy.com/MicroStrategyLibrary/ (user: Administrator, project: server-level)
+2026-04-23 16:09:02 | ERROR    | Failed to connect to https://controlling-plattform-test.cloud.strategy.com/MicroStrategyLibrary/: (Login failure); code: 'ERR003', ticket_id: 'f93418be367e4fd89eae8a0e28390604'
+2026-04-23 16:09:02 | DEBUG    | Traceback (most recent call last):
+  File "C:\Users\rsytnyk\OneDrive - MicroStrategy, Inc\Documents\CUSTOMERS\Bundesagentur fuer Arbeit\Cloud Migration\python_scripts\wartungsfenster\freigabe_skripte\files\mstr\connection.py", line 40, in mstr_connection
+    conn = Connection(
+        base_url=cfg.base_url,
+    ...<3 lines>...
+        **({"project_name": project_name} if project_name else {}),
+    )
+  File "C:\Users\rsytnyk\AppData\Local\Programs\Python\Python313\Lib\site-packages\mstrio\connection.py", line 382, in __init__
+    self.connect()
+    ~~~~~~~~~~~~^^
+  File "C:\Users\rsytnyk\AppData\Local\Programs\Python\Python313\Lib\site-packages\mstrio\connection.py", line 464, in connect
+    response = self._login()
+  File "C:\Users\rsytnyk\AppData\Local\Programs\Python\Python313\Lib\site-packages\mstrio\connection.py", line 759, in _login
+    raise e
+  File "C:\Users\rsytnyk\AppData\Local\Programs\Python\Python313\Lib\site-packages\mstrio\connection.py", line 746, in _login
+    return authentication.login(connection=self)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\Users\rsytnyk\AppData\Local\Programs\Python\Python313\Lib\site-packages\mstrio\utils\error_handlers.py", line 78, in inner
+    response_handler(response, **handler_kwargs)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\rsytnyk\AppData\Local\Programs\Python\Python313\Lib\site-packages\mstrio\utils\helper.py", line 334, in response_handler
+    raise IServerError(
+    ...<4 lines>...
+    )
+mstrio.helpers.IServerError: (Login failure); code: 'ERR003', ticket_id: 'f93418be367e4fd89eae8a0e28390604'
+
+2026-04-23 16:09:02 | ERROR    |   [ERROR] Could not connect to target for project check: (Login failure); code: 'ERR003', ticket_id: 'f93418be367e4fd89eae8a0e28390604'
+2026-04-23 16:09:02 | INFO     | 
+2026-04-23 16:09:02 | INFO     | [Preflight 3/5] Validate security role and group
+2026-04-23 16:09:02 | DEBUG    | Opening connection -> https://controlling-plattform-test.cloud.strategy.com/MicroStrategyLibrary/ (user: Administrator, project: server-level)
+2026-04-23 16:09:02 | ERROR    | Failed to connect to https://controlling-plattform-test.cloud.strategy.com/MicroStrategyLibrary/: (Login failure); code: 'ERR003', ticket_id: '97b89756660d410dbc4d3f152a0bbb16'
+2026-04-23 16:09:02 | DEBUG    | Traceback (most recent call last):
+  File "C:\Users\rsytnyk\OneDrive - MicroStrategy, Inc\Documents\CUSTOMERS\Bundesagentur fuer Arbeit\Cloud Migration\python_scripts\wartungsfenster\freigabe_skripte\files\mstr\connection.py", line 40, in mstr_connection
+    conn = Connection(
+        base_url=cfg.base_url,
+    ...<3 lines>...
+        **({"project_name": project_name} if project_name else {}),
+    )
+  File "C:\Users\rsytnyk\AppData\Local\Programs\Python\Python313\Lib\site-packages\mstrio\connection.py", line 382, in __init__
+    self.connect()
+    ~~~~~~~~~~~~^^
+  File "C:\Users\rsytnyk\AppData\Local\Programs\Python\Python313\Lib\site-packages\mstrio\connection.py", line 464, in connect
+    response = self._login()
+  File "C:\Users\rsytnyk\AppData\Local\Programs\Python\Python313\Lib\site-packages\mstrio\connection.py", line 759, in _login
+    raise e
+  File "C:\Users\rsytnyk\AppData\Local\Programs\Python\Python313\Lib\site-packages\mstrio\connection.py", line 746, in _login
+    return authentication.login(connection=self)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\Users\rsytnyk\AppData\Local\Programs\Python\Python313\Lib\site-packages\mstrio\utils\error_handlers.py", line 78, in inner
+    response_handler(response, **handler_kwargs)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\rsytnyk\AppData\Local\Programs\Python\Python313\Lib\site-packages\mstrio\utils\helper.py", line 334, in response_handler
+    raise IServerError(
+    ...<4 lines>...
+    )
+mstrio.helpers.IServerError: (Login failure); code: 'ERR003', ticket_id: '97b89756660d410dbc4d3f152a0bbb16'
+
+2026-04-23 16:09:02 | ERROR    |   [ERROR] Could not connect to target for security check: (Login failure); code: 'ERR003', ticket_id: '97b89756660d410dbc4d3f152a0bbb16'
+2026-04-23 16:09:02 | INFO     | 
+2026-04-23 16:09:02 | INFO     | [Preflight 4/5] Validate DB connections in catalog change list
+2026-04-23 16:09:02 | DEBUG    | Opening connection -> https://controlling-plattform-test.cloud.strategy.com/MicroStrategyLibrary/ (user: Administrator, project: server-level)
+2026-04-23 16:09:02 | ERROR    | Failed to connect to https://controlling-plattform-test.cloud.strategy.com/MicroStrategyLibrary/: (Login failure); code: 'ERR003', ticket_id: 'dc7403d11abc44948f48a90e7686d01b'
+2026-04-23 16:09:02 | DEBUG    | Traceback (most recent call last):
+  File "C:\Users\rsytnyk\OneDrive - MicroStrategy, Inc\Documents\CUSTOMERS\Bundesagentur fuer Arbeit\Cloud Migration\python_scripts\wartungsfenster\freigabe_skripte\files\mstr\connection.py", line 40, in mstr_connection
+    conn = Connection(
+        base_url=cfg.base_url,
+    ...<3 lines>...
+        **({"project_name": project_name} if project_name else {}),
+    )
+  File "C:\Users\rsytnyk\AppData\Local\Programs\Python\Python313\Lib\site-packages\mstrio\connection.py", line 382, in __init__
+    self.connect()
+    ~~~~~~~~~~~~^^
+  File "C:\Users\rsytnyk\AppData\Local\Programs\Python\Python313\Lib\site-packages\mstrio\connection.py", line 464, in connect
+    response = self._login()
+  File "C:\Users\rsytnyk\AppData\Local\Programs\Python\Python313\Lib\site-packages\mstrio\connection.py", line 759, in _login
+    raise e
+  File "C:\Users\rsytnyk\AppData\Local\Programs\Python\Python313\Lib\site-packages\mstrio\connection.py", line 746, in _login
+    return authentication.login(connection=self)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\Users\rsytnyk\AppData\Local\Programs\Python\Python313\Lib\site-packages\mstrio\utils\error_handlers.py", line 78, in inner
+    response_handler(response, **handler_kwargs)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\rsytnyk\AppData\Local\Programs\Python\Python313\Lib\site-packages\mstrio\utils\helper.py", line 334, in response_handler
+    raise IServerError(
+    ...<4 lines>...
+    )
+mstrio.helpers.IServerError: (Login failure); code: 'ERR003', ticket_id: 'dc7403d11abc44948f48a90e7686d01b'
+
+2026-04-23 16:09:02 | ERROR    |   [ERROR] Could not connect to target for DB connection check: (Login failure); code: 'ERR003', ticket_id: 'dc7403d11abc44948f48a90e7686d01b'
+2026-04-23 16:09:02 | INFO     | 
+2026-04-23 16:09:02 | INFO     | [Preflight 5/5] Validate merge project configuration
+2026-04-23 16:09:02 | INFO     |   [OK] MERGE_PROJECTS is valid
+2026-04-23 16:09:02 | INFO     | 
+2026-04-23 16:09:02 | ERROR    | [FAILED] preflight finished with 5 error(s): connect_target, connect_source, connect_target_step2, connect_target_step3, connect_target_step4
+2026-04-23 16:09:02 | INFO     | Process report: C:\Users\rsytnyk\OneDrive - MicroStrategy, Inc\Documents\CUSTOMERS\Bundesagentur fuer Arbeit\Cloud Migration\python_scripts\wartungsfenster\freigabe_skripte\logs\process_reports\20260423_160902_preflight.json
+2026-04-23 16:09:02 | INFO     | ============================================================
+2026-04-23 16:09:02 | INFO     | RUN FINISHED: 2026-04-23 16:09:02  |  FAILED  |  Duration: 0:00:03
+2026-04-23 16:09:02 | INFO     | ============================================================
+2026-04-23 16:10:11 | INFO     | ============================================================
+2026-04-23 16:10:11 | INFO     | RUN STARTED: 2026-04-23 16:10:11  |  command: preflight
+2026-04-23 16:10:11 | INFO     | ============================================================
+2026-04-23 16:10:11 | INFO     | Log file: C:\Users\rsytnyk\OneDrive - MicroStrategy, Inc\Documents\CUSTOMERS\Bundesagentur fuer Arbeit\Cloud Migration\python_scripts\wartungsfenster\freigabe_skripte\logs\freigabe_deployment.log
+2026-04-23 16:10:11 | INFO     | 
+2026-04-23 16:10:11 | INFO     | [Preflight 1/5] Validate connectivity to target and source
+2026-04-23 16:10:11 | DEBUG    | Opening connection -> https://controlling-plattform-test.cloud.strategy.com/MicroStrategyLibrary/ (user: Administrator, project: server-level)
+2026-04-23 16:10:12 | ERROR    | Failed to connect to https://controlling-plattform-test.cloud.strategy.com/MicroStrategyLibrary/: (Login failure); code: 'ERR003', ticket_id: '753ab7696c974dc2a9374c92526f60c4'
+2026-04-23 16:10:12 | DEBUG    | Traceback (most recent call last):
+  File "C:\Users\rsytnyk\OneDrive - MicroStrategy, Inc\Documents\CUSTOMERS\Bundesagentur fuer Arbeit\Cloud Migration\python_scripts\wartungsfenster\freigabe_skripte\files\mstr\connection.py", line 40, in mstr_connection
+    conn = Connection(
+        base_url=cfg.base_url,
+    ...<3 lines>...
+        **({"project_name": project_name} if project_name else {}),
+    )
+  File "C:\Users\rsytnyk\AppData\Local\Programs\Python\Python313\Lib\site-packages\mstrio\connection.py", line 382, in __init__
+    self.connect()
+    ~~~~~~~~~~~~^^
+  File "C:\Users\rsytnyk\AppData\Local\Programs\Python\Python313\Lib\site-packages\mstrio\connection.py", line 464, in connect
+    response = self._login()
+  File "C:\Users\rsytnyk\AppData\Local\Programs\Python\Python313\Lib\site-packages\mstrio\connection.py", line 759, in _login
+    raise e
+  File "C:\Users\rsytnyk\AppData\Local\Programs\Python\Python313\Lib\site-packages\mstrio\connection.py", line 746, in _login
+    return authentication.login(connection=self)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\Users\rsytnyk\AppData\Local\Programs\Python\Python313\Lib\site-packages\mstrio\utils\error_handlers.py", line 78, in inner
+    response_handler(response, **handler_kwargs)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\rsytnyk\AppData\Local\Programs\Python\Python313\Lib\site-packages\mstrio\utils\helper.py", line 334, in response_handler
+    raise IServerError(
+    ...<4 lines>...
+    )
+mstrio.helpers.IServerError: (Login failure); code: 'ERR003', ticket_id: '753ab7696c974dc2a9374c92526f60c4'
+
+2026-04-23 16:10:12 | ERROR    |   [ERROR] Target connectivity failed: (Login failure); code: 'ERR003', ticket_id: '753ab7696c974dc2a9374c92526f60c4'
+2026-04-23 16:10:12 | DEBUG    | Opening connection -> https://controlling.cloud.strategy.com/MicroStrategyLibrary/ (user: s107_ctrl_platform_administrator, project: server-level)
+2026-04-23 16:10:12 | ERROR    | Failed to connect to https://controlling.cloud.strategy.com/MicroStrategyLibrary/: (Login failure); code: 'ERR003', ticket_id: '16c894e6db474986ac975e7ce00bf047'
+2026-04-23 16:10:12 | DEBUG    | Traceback (most recent call last):
+  File "C:\Users\rsytnyk\OneDrive - MicroStrategy, Inc\Documents\CUSTOMERS\Bundesagentur fuer Arbeit\Cloud Migration\python_scripts\wartungsfenster\freigabe_skripte\files\mstr\connection.py", line 40, in mstr_connection
+    conn = Connection(
+        base_url=cfg.base_url,
+    ...<3 lines>...
+        **({"project_name": project_name} if project_name else {}),
+    )
+  File "C:\Users\rsytnyk\AppData\Local\Programs\Python\Python313\Lib\site-packages\mstrio\connection.py", line 382, in __init__
+    self.connect()
+    ~~~~~~~~~~~~^^
+  File "C:\Users\rsytnyk\AppData\Local\Programs\Python\Python313\Lib\site-packages\mstrio\connection.py", line 464, in connect
+    response = self._login()
+  File "C:\Users\rsytnyk\AppData\Local\Programs\Python\Python313\Lib\site-packages\mstrio\connection.py", line 759, in _login
+    raise e
+  File "C:\Users\rsytnyk\AppData\Local\Programs\Python\Python313\Lib\site-packages\mstrio\connection.py", line 746, in _login
+    return authentication.login(connection=self)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\Users\rsytnyk\AppData\Local\Programs\Python\Python313\Lib\site-packages\mstrio\utils\error_handlers.py", line 78, in inner
+    response_handler(response, **handler_kwargs)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\rsytnyk\AppData\Local\Programs\Python\Python313\Lib\site-packages\mstrio\utils\helper.py", line 334, in response_handler
+    raise IServerError(
+    ...<4 lines>...
+    )
+mstrio.helpers.IServerError: (Login failure); code: 'ERR003', ticket_id: '16c894e6db474986ac975e7ce00bf047'
+
+2026-04-23 16:10:12 | ERROR    |   [ERROR] Source connectivity failed: (Login failure); code: 'ERR003', ticket_id: '16c894e6db474986ac975e7ce00bf047'
+2026-04-23 16:10:12 | INFO     | 
+2026-04-23 16:10:12 | INFO     | [Preflight 2/5] Validate project existence on target
+2026-04-23 16:10:12 | DEBUG    | Opening connection -> https://controlling-plattform-test.cloud.strategy.com/MicroStrategyLibrary/ (user: Administrator, project: server-level)
+2026-04-23 16:10:13 | ERROR    | Failed to connect to https://controlling-plattform-test.cloud.strategy.com/MicroStrategyLibrary/: (Login failure); code: 'ERR003', ticket_id: '508b5909c8054041be1fa8b7eb11d9a9'
+2026-04-23 16:10:13 | DEBUG    | Traceback (most recent call last):
+  File "C:\Users\rsytnyk\OneDrive - MicroStrategy, Inc\Documents\CUSTOMERS\Bundesagentur fuer Arbeit\Cloud Migration\python_scripts\wartungsfenster\freigabe_skripte\files\mstr\connection.py", line 40, in mstr_connection
+    conn = Connection(
+        base_url=cfg.base_url,
+    ...<3 lines>...
+        **({"project_name": project_name} if project_name else {}),
+    )
+  File "C:\Users\rsytnyk\AppData\Local\Programs\Python\Python313\Lib\site-packages\mstrio\connection.py", line 382, in __init__
+    self.connect()
+    ~~~~~~~~~~~~^^
+  File "C:\Users\rsytnyk\AppData\Local\Programs\Python\Python313\Lib\site-packages\mstrio\connection.py", line 464, in connect
+    response = self._login()
+  File "C:\Users\rsytnyk\AppData\Local\Programs\Python\Python313\Lib\site-packages\mstrio\connection.py", line 759, in _login
+    raise e
+  File "C:\Users\rsytnyk\AppData\Local\Programs\Python\Python313\Lib\site-packages\mstrio\connection.py", line 746, in _login
+    return authentication.login(connection=self)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\Users\rsytnyk\AppData\Local\Programs\Python\Python313\Lib\site-packages\mstrio\utils\error_handlers.py", line 78, in inner
+    response_handler(response, **handler_kwargs)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\rsytnyk\AppData\Local\Programs\Python\Python313\Lib\site-packages\mstrio\utils\helper.py", line 334, in response_handler
+    raise IServerError(
+    ...<4 lines>...
+    )
+mstrio.helpers.IServerError: (Login failure); code: 'ERR003', ticket_id: '508b5909c8054041be1fa8b7eb11d9a9'
+
+2026-04-23 16:10:13 | ERROR    |   [ERROR] Could not connect to target for project check: (Login failure); code: 'ERR003', ticket_id: '508b5909c8054041be1fa8b7eb11d9a9'
+2026-04-23 16:10:13 | INFO     | 
+2026-04-23 16:10:13 | INFO     | [Preflight 3/5] Validate security role and group
+2026-04-23 16:10:13 | DEBUG    | Opening connection -> https://controlling-plattform-test.cloud.strategy.com/MicroStrategyLibrary/ (user: Administrator, project: server-level)
+2026-04-23 16:10:13 | ERROR    | Failed to connect to https://controlling-plattform-test.cloud.strategy.com/MicroStrategyLibrary/: (Login failure); code: 'ERR003', ticket_id: 'c4ed50c0f5b64a93a7bb10714f3c5daa'
+2026-04-23 16:10:13 | DEBUG    | Traceback (most recent call last):
+  File "C:\Users\rsytnyk\OneDrive - MicroStrategy, Inc\Documents\CUSTOMERS\Bundesagentur fuer Arbeit\Cloud Migration\python_scripts\wartungsfenster\freigabe_skripte\files\mstr\connection.py", line 40, in mstr_connection
+    conn = Connection(
+        base_url=cfg.base_url,
+    ...<3 lines>...
+        **({"project_name": project_name} if project_name else {}),
+    )
+  File "C:\Users\rsytnyk\AppData\Local\Programs\Python\Python313\Lib\site-packages\mstrio\connection.py", line 382, in __init__
+    self.connect()
+    ~~~~~~~~~~~~^^
+  File "C:\Users\rsytnyk\AppData\Local\Programs\Python\Python313\Lib\site-packages\mstrio\connection.py", line 464, in connect
+    response = self._login()
+  File "C:\Users\rsytnyk\AppData\Local\Programs\Python\Python313\Lib\site-packages\mstrio\connection.py", line 759, in _login
+    raise e
+  File "C:\Users\rsytnyk\AppData\Local\Programs\Python\Python313\Lib\site-packages\mstrio\connection.py", line 746, in _login
+    return authentication.login(connection=self)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\Users\rsytnyk\AppData\Local\Programs\Python\Python313\Lib\site-packages\mstrio\utils\error_handlers.py", line 78, in inner
+    response_handler(response, **handler_kwargs)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\rsytnyk\AppData\Local\Programs\Python\Python313\Lib\site-packages\mstrio\utils\helper.py", line 334, in response_handler
+    raise IServerError(
+    ...<4 lines>...
+    )
+mstrio.helpers.IServerError: (Login failure); code: 'ERR003', ticket_id: 'c4ed50c0f5b64a93a7bb10714f3c5daa'
+
+2026-04-23 16:10:13 | ERROR    |   [ERROR] Could not connect to target for security check: (Login failure); code: 'ERR003', ticket_id: 'c4ed50c0f5b64a93a7bb10714f3c5daa'
+2026-04-23 16:10:13 | INFO     | 
+2026-04-23 16:10:13 | INFO     | [Preflight 4/5] Validate DB connections in catalog change list
+2026-04-23 16:10:13 | DEBUG    | Opening connection -> https://controlling-plattform-test.cloud.strategy.com/MicroStrategyLibrary/ (user: Administrator, project: server-level)
+2026-04-23 16:10:14 | ERROR    | Failed to connect to https://controlling-plattform-test.cloud.strategy.com/MicroStrategyLibrary/: (Login failure); code: 'ERR003', ticket_id: 'b8fb6ef7bda348ea9089105c9d653d34'
+2026-04-23 16:10:14 | DEBUG    | Traceback (most recent call last):
+  File "C:\Users\rsytnyk\OneDrive - MicroStrategy, Inc\Documents\CUSTOMERS\Bundesagentur fuer Arbeit\Cloud Migration\python_scripts\wartungsfenster\freigabe_skripte\files\mstr\connection.py", line 40, in mstr_connection
+    conn = Connection(
+        base_url=cfg.base_url,
+    ...<3 lines>...
+        **({"project_name": project_name} if project_name else {}),
+    )
+  File "C:\Users\rsytnyk\AppData\Local\Programs\Python\Python313\Lib\site-packages\mstrio\connection.py", line 382, in __init__
+    self.connect()
+    ~~~~~~~~~~~~^^
+  File "C:\Users\rsytnyk\AppData\Local\Programs\Python\Python313\Lib\site-packages\mstrio\connection.py", line 464, in connect
+    response = self._login()
+  File "C:\Users\rsytnyk\AppData\Local\Programs\Python\Python313\Lib\site-packages\mstrio\connection.py", line 759, in _login
+    raise e
+  File "C:\Users\rsytnyk\AppData\Local\Programs\Python\Python313\Lib\site-packages\mstrio\connection.py", line 746, in _login
+    return authentication.login(connection=self)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\Users\rsytnyk\AppData\Local\Programs\Python\Python313\Lib\site-packages\mstrio\utils\error_handlers.py", line 78, in inner
+    response_handler(response, **handler_kwargs)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\rsytnyk\AppData\Local\Programs\Python\Python313\Lib\site-packages\mstrio\utils\helper.py", line 334, in response_handler
+    raise IServerError(
+    ...<4 lines>...
+    )
+mstrio.helpers.IServerError: (Login failure); code: 'ERR003', ticket_id: 'b8fb6ef7bda348ea9089105c9d653d34'
+
+2026-04-23 16:10:14 | ERROR    |   [ERROR] Could not connect to target for DB connection check: (Login failure); code: 'ERR003', ticket_id: 'b8fb6ef7bda348ea9089105c9d653d34'
+2026-04-23 16:10:14 | INFO     | 
+2026-04-23 16:10:14 | INFO     | [Preflight 5/5] Validate merge project configuration
+2026-04-23 16:10:14 | INFO     |   [OK] MERGE_PROJECTS is valid
+2026-04-23 16:10:14 | INFO     | 
+2026-04-23 16:10:14 | ERROR    | [FAILED] preflight finished with 5 error(s): connect_target, connect_source, connect_target_step2, connect_target_step3, connect_target_step4
+2026-04-23 16:10:14 | INFO     | Process report: C:\Users\rsytnyk\OneDrive - MicroStrategy, Inc\Documents\CUSTOMERS\Bundesagentur fuer Arbeit\Cloud Migration\python_scripts\wartungsfenster\freigabe_skripte\logs\process_reports\20260423_161014_preflight.json
+2026-04-23 16:10:14 | INFO     | ============================================================
+2026-04-23 16:10:14 | INFO     | RUN FINISHED: 2026-04-23 16:10:14  |  FAILED  |  Duration: 0:00:02
+2026-04-23 16:10:14 | INFO     | ============================================================
+2026-04-23 16:12:11 | INFO     | ============================================================
+2026-04-23 16:12:11 | INFO     | RUN STARTED: 2026-04-23 16:12:11  |  command: preflight
+2026-04-23 16:12:11 | INFO     | ============================================================
+2026-04-23 16:12:11 | INFO     | Log file: C:\Users\rsytnyk\OneDrive - MicroStrategy, Inc\Documents\CUSTOMERS\Bundesagentur fuer Arbeit\Cloud Migration\python_scripts\wartungsfenster\freigabe_skripte\logs\freigabe_deployment.log
+2026-04-23 16:12:12 | INFO     | 
+2026-04-23 16:12:12 | INFO     | [Preflight 1/5] Validate connectivity to target and source
+2026-04-23 16:12:12 | DEBUG    | Opening connection -> https://controlling-plattform-test.cloud.strategy.com/MicroStrategyLibrary/ (user: s107_ctrl_prd_administrator, project: server-level)
+2026-04-23 16:12:13 | ERROR    | Failed to connect to https://controlling-plattform-test.cloud.strategy.com/MicroStrategyLibrary/: (Login failure); code: 'ERR003', ticket_id: 'c80d75e6ad304d86bb367432ed16343e'
+2026-04-23 16:12:13 | DEBUG    | Traceback (most recent call last):
+  File "C:\Users\rsytnyk\OneDrive - MicroStrategy, Inc\Documents\CUSTOMERS\Bundesagentur fuer Arbeit\Cloud Migration\python_scripts\wartungsfenster\freigabe_skripte\files\mstr\connection.py", line 40, in mstr_connection
+    conn = Connection(
+        base_url=cfg.base_url,
+    ...<3 lines>...
+        **({"project_name": project_name} if project_name else {}),
+    )
+  File "C:\Users\rsytnyk\AppData\Local\Programs\Python\Python313\Lib\site-packages\mstrio\connection.py", line 382, in __init__
+    self.connect()
+    ~~~~~~~~~~~~^^
+  File "C:\Users\rsytnyk\AppData\Local\Programs\Python\Python313\Lib\site-packages\mstrio\connection.py", line 464, in connect
+    response = self._login()
+  File "C:\Users\rsytnyk\AppData\Local\Programs\Python\Python313\Lib\site-packages\mstrio\connection.py", line 759, in _login
+    raise e
+  File "C:\Users\rsytnyk\AppData\Local\Programs\Python\Python313\Lib\site-packages\mstrio\connection.py", line 746, in _login
+    return authentication.login(connection=self)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\Users\rsytnyk\AppData\Local\Programs\Python\Python313\Lib\site-packages\mstrio\utils\error_handlers.py", line 78, in inner
+    response_handler(response, **handler_kwargs)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\rsytnyk\AppData\Local\Programs\Python\Python313\Lib\site-packages\mstrio\utils\helper.py", line 334, in response_handler
+    raise IServerError(
+    ...<4 lines>...
+    )
+mstrio.helpers.IServerError: (Login failure); code: 'ERR003', ticket_id: 'c80d75e6ad304d86bb367432ed16343e'
+
+2026-04-23 16:12:13 | ERROR    |   [ERROR] Target connectivity failed: (Login failure); code: 'ERR003', ticket_id: 'c80d75e6ad304d86bb367432ed16343e'
+2026-04-23 16:12:13 | DEBUG    | Opening connection -> https://controlling.cloud.strategy.com/MicroStrategyLibrary/ (user: s107_ctrl_platform_administrator, project: server-level)
+2026-04-23 16:12:13 | ERROR    | Failed to connect to https://controlling.cloud.strategy.com/MicroStrategyLibrary/: (Login failure); code: 'ERR003', ticket_id: 'b436884a70bb4d6499dadbdc18bd80af'
+2026-04-23 16:12:13 | DEBUG    | Traceback (most recent call last):
+  File "C:\Users\rsytnyk\OneDrive - MicroStrategy, Inc\Documents\CUSTOMERS\Bundesagentur fuer Arbeit\Cloud Migration\python_scripts\wartungsfenster\freigabe_skripte\files\mstr\connection.py", line 40, in mstr_connection
+    conn = Connection(
+        base_url=cfg.base_url,
+    ...<3 lines>...
+        **({"project_name": project_name} if project_name else {}),
+    )
+  File "C:\Users\rsytnyk\AppData\Local\Programs\Python\Python313\Lib\site-packages\mstrio\connection.py", line 382, in __init__
+    self.connect()
+    ~~~~~~~~~~~~^^
+  File "C:\Users\rsytnyk\AppData\Local\Programs\Python\Python313\Lib\site-packages\mstrio\connection.py", line 464, in connect
+    response = self._login()
+  File "C:\Users\rsytnyk\AppData\Local\Programs\Python\Python313\Lib\site-packages\mstrio\connection.py", line 759, in _login
+    raise e
+  File "C:\Users\rsytnyk\AppData\Local\Programs\Python\Python313\Lib\site-packages\mstrio\connection.py", line 746, in _login
+    return authentication.login(connection=self)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\Users\rsytnyk\AppData\Local\Programs\Python\Python313\Lib\site-packages\mstrio\utils\error_handlers.py", line 78, in inner
+    response_handler(response, **handler_kwargs)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\rsytnyk\AppData\Local\Programs\Python\Python313\Lib\site-packages\mstrio\utils\helper.py", line 334, in response_handler
+    raise IServerError(
+    ...<4 lines>...
+    )
+mstrio.helpers.IServerError: (Login failure); code: 'ERR003', ticket_id: 'b436884a70bb4d6499dadbdc18bd80af'
+
+2026-04-23 16:12:13 | ERROR    |   [ERROR] Source connectivity failed: (Login failure); code: 'ERR003', ticket_id: 'b436884a70bb4d6499dadbdc18bd80af'
+2026-04-23 16:12:13 | INFO     | 
+2026-04-23 16:12:13 | INFO     | [Preflight 2/5] Validate project existence on target
+2026-04-23 16:12:13 | DEBUG    | Opening connection -> https://controlling-plattform-test.cloud.strategy.com/MicroStrategyLibrary/ (user: s107_ctrl_prd_administrator, project: server-level)
+2026-04-23 16:12:14 | ERROR    | Failed to connect to https://controlling-plattform-test.cloud.strategy.com/MicroStrategyLibrary/: (Login failure); code: 'ERR003', ticket_id: 'dc740d7d6b744ebfb360708c95f57077'
+2026-04-23 16:12:14 | DEBUG    | Traceback (most recent call last):
+  File "C:\Users\rsytnyk\OneDrive - MicroStrategy, Inc\Documents\CUSTOMERS\Bundesagentur fuer Arbeit\Cloud Migration\python_scripts\wartungsfenster\freigabe_skripte\files\mstr\connection.py", line 40, in mstr_connection
+    conn = Connection(
+        base_url=cfg.base_url,
+    ...<3 lines>...
+        **({"project_name": project_name} if project_name else {}),
+    )
+  File "C:\Users\rsytnyk\AppData\Local\Programs\Python\Python313\Lib\site-packages\mstrio\connection.py", line 382, in __init__
+    self.connect()
+    ~~~~~~~~~~~~^^
+  File "C:\Users\rsytnyk\AppData\Local\Programs\Python\Python313\Lib\site-packages\mstrio\connection.py", line 464, in connect
+    response = self._login()
+  File "C:\Users\rsytnyk\AppData\Local\Programs\Python\Python313\Lib\site-packages\mstrio\connection.py", line 759, in _login
+    raise e
+  File "C:\Users\rsytnyk\AppData\Local\Programs\Python\Python313\Lib\site-packages\mstrio\connection.py", line 746, in _login
+    return authentication.login(connection=self)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\Users\rsytnyk\AppData\Local\Programs\Python\Python313\Lib\site-packages\mstrio\utils\error_handlers.py", line 78, in inner
+    response_handler(response, **handler_kwargs)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\rsytnyk\AppData\Local\Programs\Python\Python313\Lib\site-packages\mstrio\utils\helper.py", line 334, in response_handler
+    raise IServerError(
+    ...<4 lines>...
+    )
+mstrio.helpers.IServerError: (Login failure); code: 'ERR003', ticket_id: 'dc740d7d6b744ebfb360708c95f57077'
+
+2026-04-23 16:12:14 | ERROR    |   [ERROR] Could not connect to target for project check: (Login failure); code: 'ERR003', ticket_id: 'dc740d7d6b744ebfb360708c95f57077'
+2026-04-23 16:12:14 | INFO     | 
+2026-04-23 16:12:14 | INFO     | [Preflight 3/5] Validate security role and group
+2026-04-23 16:12:14 | DEBUG    | Opening connection -> https://controlling-plattform-test.cloud.strategy.com/MicroStrategyLibrary/ (user: s107_ctrl_prd_administrator, project: server-level)
+2026-04-23 16:12:14 | ERROR    | Failed to connect to https://controlling-plattform-test.cloud.strategy.com/MicroStrategyLibrary/: (Login failure); code: 'ERR003', ticket_id: '657f798d24b146adbc99a270cf97acca'
+2026-04-23 16:12:14 | DEBUG    | Traceback (most recent call last):
+  File "C:\Users\rsytnyk\OneDrive - MicroStrategy, Inc\Documents\CUSTOMERS\Bundesagentur fuer Arbeit\Cloud Migration\python_scripts\wartungsfenster\freigabe_skripte\files\mstr\connection.py", line 40, in mstr_connection
+    conn = Connection(
+        base_url=cfg.base_url,
+    ...<3 lines>...
+        **({"project_name": project_name} if project_name else {}),
+    )
+  File "C:\Users\rsytnyk\AppData\Local\Programs\Python\Python313\Lib\site-packages\mstrio\connection.py", line 382, in __init__
+    self.connect()
+    ~~~~~~~~~~~~^^
+  File "C:\Users\rsytnyk\AppData\Local\Programs\Python\Python313\Lib\site-packages\mstrio\connection.py", line 464, in connect
+    response = self._login()
+  File "C:\Users\rsytnyk\AppData\Local\Programs\Python\Python313\Lib\site-packages\mstrio\connection.py", line 759, in _login
+    raise e
+  File "C:\Users\rsytnyk\AppData\Local\Programs\Python\Python313\Lib\site-packages\mstrio\connection.py", line 746, in _login
+    return authentication.login(connection=self)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\Users\rsytnyk\AppData\Local\Programs\Python\Python313\Lib\site-packages\mstrio\utils\error_handlers.py", line 78, in inner
+    response_handler(response, **handler_kwargs)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\rsytnyk\AppData\Local\Programs\Python\Python313\Lib\site-packages\mstrio\utils\helper.py", line 334, in response_handler
+    raise IServerError(
+    ...<4 lines>...
+    )
+mstrio.helpers.IServerError: (Login failure); code: 'ERR003', ticket_id: '657f798d24b146adbc99a270cf97acca'
+
+2026-04-23 16:12:14 | ERROR    |   [ERROR] Could not connect to target for security check: (Login failure); code: 'ERR003', ticket_id: '657f798d24b146adbc99a270cf97acca'
+2026-04-23 16:12:14 | INFO     | 
+2026-04-23 16:12:14 | INFO     | [Preflight 4/5] Validate DB connections in catalog change list
+2026-04-23 16:12:14 | DEBUG    | Opening connection -> https://controlling-plattform-test.cloud.strategy.com/MicroStrategyLibrary/ (user: s107_ctrl_prd_administrator, project: server-level)
+2026-04-23 16:12:14 | ERROR    | Failed to connect to https://controlling-plattform-test.cloud.strategy.com/MicroStrategyLibrary/: (Login failure); code: 'ERR003', ticket_id: '85477e4c619747c28d75a08ba8a0d684'
+2026-04-23 16:12:14 | DEBUG    | Traceback (most recent call last):
+  File "C:\Users\rsytnyk\OneDrive - MicroStrategy, Inc\Documents\CUSTOMERS\Bundesagentur fuer Arbeit\Cloud Migration\python_scripts\wartungsfenster\freigabe_skripte\files\mstr\connection.py", line 40, in mstr_connection
+    conn = Connection(
+        base_url=cfg.base_url,
+    ...<3 lines>...
+        **({"project_name": project_name} if project_name else {}),
+    )
+  File "C:\Users\rsytnyk\AppData\Local\Programs\Python\Python313\Lib\site-packages\mstrio\connection.py", line 382, in __init__
+    self.connect()
+    ~~~~~~~~~~~~^^
+  File "C:\Users\rsytnyk\AppData\Local\Programs\Python\Python313\Lib\site-packages\mstrio\connection.py", line 464, in connect
+    response = self._login()
+  File "C:\Users\rsytnyk\AppData\Local\Programs\Python\Python313\Lib\site-packages\mstrio\connection.py", line 759, in _login
+    raise e
+  File "C:\Users\rsytnyk\AppData\Local\Programs\Python\Python313\Lib\site-packages\mstrio\connection.py", line 746, in _login
+    return authentication.login(connection=self)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\Users\rsytnyk\AppData\Local\Programs\Python\Python313\Lib\site-packages\mstrio\utils\error_handlers.py", line 78, in inner
+    response_handler(response, **handler_kwargs)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\rsytnyk\AppData\Local\Programs\Python\Python313\Lib\site-packages\mstrio\utils\helper.py", line 334, in response_handler
+    raise IServerError(
+    ...<4 lines>...
+    )
+mstrio.helpers.IServerError: (Login failure); code: 'ERR003', ticket_id: '85477e4c619747c28d75a08ba8a0d684'
+
+2026-04-23 16:12:14 | ERROR    |   [ERROR] Could not connect to target for DB connection check: (Login failure); code: 'ERR003', ticket_id: '85477e4c619747c28d75a08ba8a0d684'
+2026-04-23 16:12:14 | INFO     | 
+2026-04-23 16:12:14 | INFO     | [Preflight 5/5] Validate merge project configuration
+2026-04-23 16:12:14 | INFO     |   [OK] MERGE_PROJECTS is valid
+2026-04-23 16:12:14 | INFO     | 
+2026-04-23 16:12:14 | ERROR    | [FAILED] preflight finished with 5 error(s): connect_target, connect_source, connect_target_step2, connect_target_step3, connect_target_step4
+2026-04-23 16:12:14 | INFO     | Process report: C:\Users\rsytnyk\OneDrive - MicroStrategy, Inc\Documents\CUSTOMERS\Bundesagentur fuer Arbeit\Cloud Migration\python_scripts\wartungsfenster\freigabe_skripte\logs\process_reports\20260423_161214_preflight.json
+2026-04-23 16:12:14 | INFO     | ============================================================
+2026-04-23 16:12:14 | INFO     | RUN FINISHED: 2026-04-23 16:12:14  |  FAILED  |  Duration: 0:00:02
+2026-04-23 16:12:14 | INFO     | ============================================================
+2026-04-23 16:12:59 | INFO     | ============================================================
+2026-04-23 16:12:59 | INFO     | RUN STARTED: 2026-04-23 16:12:59  |  command: preflight
+2026-04-23 16:12:59 | INFO     | ============================================================
+2026-04-23 16:12:59 | INFO     | Log file: C:\Users\rsytnyk\OneDrive - MicroStrategy, Inc\Documents\CUSTOMERS\Bundesagentur fuer Arbeit\Cloud Migration\python_scripts\wartungsfenster\freigabe_skripte\logs\freigabe_deployment.log
+2026-04-23 16:13:00 | INFO     | 
+2026-04-23 16:13:00 | INFO     | [Preflight 1/5] Validate connectivity to target and source
+2026-04-23 16:13:00 | DEBUG    | Opening connection -> https://controlling-plattform-test.cloud.strategy.com/MicroStrategyLibrary/ (user: s107_ctrl_platform_administrator, project: server-level)
+2026-04-23 16:13:00 | DEBUG    | Connection established
+2026-04-23 16:13:00 | INFO     |   [OK] Connected to target environment
+2026-04-23 16:13:00 | DEBUG    | Connection closed
+2026-04-23 16:13:00 | DEBUG    | Opening connection -> https://controlling.cloud.strategy.com/MicroStrategyLibrary/ (user: s107_ctrl_prd_administrator, project: server-level)
+2026-04-23 16:13:01 | DEBUG    | Connection established
+2026-04-23 16:13:01 | INFO     |   [OK] Connected to source environment
+2026-04-23 16:13:01 | DEBUG    | Connection closed
+2026-04-23 16:13:01 | INFO     | 
+2026-04-23 16:13:01 | INFO     | [Preflight 2/5] Validate project existence on target
+2026-04-23 16:13:01 | DEBUG    | Opening connection -> https://controlling-plattform-test.cloud.strategy.com/MicroStrategyLibrary/ (user: s107_ctrl_platform_administrator, project: server-level)
+2026-04-23 16:13:01 | DEBUG    | Connection established
+2026-04-23 16:13:01 | INFO     |   [OK] Project found: 'SGB II Falke Rechtsbehelfe'
+2026-04-23 16:13:01 | INFO     |   [OK] Project found: 'SGB II S2S'
+2026-04-23 16:13:02 | INFO     |   [OK] Project found: 'SGB II S2S Relational'
+2026-04-23 16:13:02 | INFO     |   [OK] Project found: 'SGB II S2S ZD'
+2026-04-23 16:13:02 | INFO     |   [OK] Project found: 'SGB II S2S ZD CON'
+2026-04-23 16:13:02 | INFO     |   [OK] Project found: 'SGB II MaEnde'
+2026-04-23 16:13:02 | DEBUG    | Connection closed
+2026-04-23 16:13:02 | INFO     | 
+2026-04-23 16:13:02 | INFO     | [Preflight 3/5] Validate security role and group
+2026-04-23 16:13:02 | DEBUG    | Opening connection -> https://controlling-plattform-test.cloud.strategy.com/MicroStrategyLibrary/ (user: s107_ctrl_platform_administrator, project: server-level)
+2026-04-23 16:13:02 | DEBUG    | Connection established
+2026-04-23 16:13:03 | ERROR    |   [ERROR] Security role not found 'Normale Benutzer': There is no Security Role associated with the given name: 'Normale Benutzer'
+2026-04-23 16:13:03 | INFO     |   [OK] Security group found: 'SGB II Projektzugriff'
+2026-04-23 16:13:04 | DEBUG    | Connection closed
+2026-04-23 16:13:04 | INFO     | 
+2026-04-23 16:13:04 | INFO     | [Preflight 4/5] Validate DB connections in catalog change list
+2026-04-23 16:13:04 | DEBUG    | Opening connection -> https://controlling-plattform-test.cloud.strategy.com/MicroStrategyLibrary/ (user: s107_ctrl_platform_administrator, project: server-level)
+2026-04-23 16:13:04 | DEBUG    | Connection established
+2026-04-23 16:13:11 | INFO     |   [OK] DB connection found: 'SGB II - S2S - Mn T0 - MSAS@DST_BICOMSTRSQLSVC'
+2026-04-23 16:13:18 | INFO     |   [OK] DB connection found: 'SGB II - S2S - Mn - MSAS@DST_BICOMSTRSQLSVC'
+2026-04-23 16:13:25 | INFO     |   [OK] DB connection found: 'SGB II - Falke Rechtsbehelfe - Falke Rechtsbehelfe - MSAS@DST_BICOMSTRSQLSVC'
+2026-04-23 16:13:32 | INFO     |   [OK] DB connection found: 'SGB II - S2S - S2S - MSAS@DST_BICOMSTRSQLSVC'
+2026-04-23 16:13:39 | INFO     |   [OK] DB connection found: 'SGB II - S2S ZD CON - S2S ZD CON - MSAS@DST_BICOMSTRSQLSVC'
+2026-04-23 16:13:46 | INFO     |   [OK] DB connection found: 'SGB II - S2S ZD - S2S ZD - MSAS@DST_BICOMSTRSQLSVC'
+2026-04-23 16:13:46 | DEBUG    | Connection closed
+2026-04-23 16:13:46 | INFO     | 
+2026-04-23 16:13:46 | INFO     | [Preflight 5/5] Validate merge project configuration
+2026-04-23 16:13:46 | INFO     |   [OK] MERGE_PROJECTS is valid
+2026-04-23 16:13:46 | INFO     | 
+2026-04-23 16:13:46 | ERROR    | [FAILED] preflight finished with 1 error(s): security_role
+2026-04-23 16:13:46 | INFO     | Process report: C:\Users\rsytnyk\OneDrive - MicroStrategy, Inc\Documents\CUSTOMERS\Bundesagentur fuer Arbeit\Cloud Migration\python_scripts\wartungsfenster\freigabe_skripte\logs\process_reports\20260423_161346_preflight.json
+2026-04-23 16:13:46 | INFO     | ============================================================
+2026-04-23 16:13:46 | INFO     | RUN FINISHED: 2026-04-23 16:13:46  |  FAILED  |  Duration: 0:00:47
+2026-04-23 16:13:46 | INFO     | ============================================================
+2026-04-23 16:29:04 | INFO     | ============================================================
+2026-04-23 16:29:04 | INFO     | RUN STARTED: 2026-04-23 16:29:04  |  command: list-security
+2026-04-23 16:29:04 | INFO     | ============================================================
+2026-04-23 16:29:04 | INFO     | Log file: C:\Users\rsytnyk\OneDrive - MicroStrategy, Inc\Documents\CUSTOMERS\Bundesagentur fuer Arbeit\Cloud Migration\python_scripts\wartungsfenster\freigabe_skripte\logs\freigabe_deployment.log
+2026-04-23 16:29:05 | INFO     | [Helper 1/1] List security roles and groups on target
+2026-04-23 16:29:05 | DEBUG    | Opening connection -> https://controlling-plattform-test.cloud.strategy.com/MicroStrategyLibrary/ (user: s107_ctrl_platform_administrator, project: server-level)
+2026-04-23 16:29:05 | DEBUG    | Connection established
+2026-04-23 16:29:07 | INFO     | 
+2026-04-23 16:29:07 | INFO     | Roles containing 'user', 'normal', or 'sgb':
+2026-04-23 16:29:07 | INFO     |    1. EFM 2AP Web-User
+2026-04-23 16:29:07 | INFO     |    2. Normal Users
+2026-04-23 16:29:07 | INFO     |    3. Normal Users_manuell
+2026-04-23 16:29:07 | INFO     |    4. Power Users
+2026-04-23 16:29:07 | INFO     | 
+2026-04-23 16:29:07 | INFO     | Groups containing 'sgb' or 'projekt':
+2026-04-23 16:29:07 | INFO     |    1. 11356.OPS-PSGBS
+2026-04-23 16:29:07 | INFO     |    2. ADEBAR Projektzugriff
+2026-04-23 16:29:07 | INFO     |    3. BISS-Datenraum-Projekte-Zentrale
+2026-04-23 16:29:07 | INFO     |    4. BPS Projektzugriff
+2026-04-23 16:29:07 | INFO     |    5. BPS Projektzugriff Eval
+2026-04-23 16:29:07 | INFO     |    6. BPS Projektzugriff IT
+2026-04-23 16:29:07 | INFO     |    7. Controlling Projektzugriff
+2026-04-23 16:29:07 | INFO     |    8. Controlling Projektzugriff
+2026-04-23 16:29:07 | INFO     |    9. KRM Projektzugriff
+2026-04-23 16:29:07 | INFO     |   10. KRM Projektzugriff Eval
+2026-04-23 16:29:07 | INFO     |   11. KRM Projektzugriff IT
+2026-04-23 16:29:07 | INFO     |   12. L000-BICmQSPortal-SGBII
+2026-04-23 16:29:07 | INFO     |   13. L000-BICmQSPortal-SGBIII
+2026-04-23 16:29:07 | INFO     |   14. L000-BIPortalFachcontrollingAbnahme-LG-SGBII
+2026-04-23 16:29:07 | INFO     |   15. L000-BIPortalFachcontrollingAbnahme-LG-SGBIII
+2026-04-23 16:29:07 | INFO     |   16. OC Projektzugriff
+2026-04-23 16:29:07 | INFO     |   17. OIAM Projektzugriff
+2026-04-23 16:29:07 | INFO     |   18. OPO Projektzugriff
+2026-04-23 16:29:07 | INFO     |   19. OPO Projektzugriff
+2026-04-23 16:29:07 | INFO     |   20. SGB II Projektzugriff
+2026-04-23 16:29:07 | INFO     |   21. SGB II Projektzugriff Eval
+2026-04-23 16:29:07 | INFO     |   22. SGB II Projektzugriff IT
+2026-04-23 16:29:07 | INFO     |   23. SGB III Projektzugriff
+2026-04-23 16:29:07 | INFO     |   24. SGB III Projektzugriff AED
+2026-04-23 16:29:07 | INFO     |   25. SGB III Projektzugriff AMDL
+2026-04-23 16:29:07 | INFO     |   26. SGB III Projektzugriff AMTB
+2026-04-23 16:29:07 | INFO     |   27. SGB III Projektzugriff Bio BB
+2026-04-23 16:29:07 | INFO     |   28. SGB III Projektzugriff BioData
+2026-04-23 16:29:07 | INFO     |   29. SGB III Projektzugriff BioData LBB
+2026-04-23 16:29:07 | INFO     |   30. SGB III Projektzugriff Comed
+2026-04-23 16:29:07 | INFO     |   ... and 33 more
+2026-04-23 16:29:07 | INFO     | 
+2026-04-23 16:29:07 | INFO     | Total roles returned:  29
+2026-04-23 16:29:07 | INFO     | Total groups returned: 6380
+2026-04-23 16:29:07 | DEBUG    | Connection closed
+2026-04-23 16:29:07 | INFO     | [SUCCESS] list-security completed successfully
+2026-04-23 16:29:07 | INFO     | Process report: C:\Users\rsytnyk\OneDrive - MicroStrategy, Inc\Documents\CUSTOMERS\Bundesagentur fuer Arbeit\Cloud Migration\python_scripts\wartungsfenster\freigabe_skripte\logs\process_reports\20260423_162907_list-security.json
+2026-04-23 16:29:07 | INFO     | ============================================================
+2026-04-23 16:29:07 | INFO     | RUN FINISHED: 2026-04-23 16:29:07  |  SUCCESS  |  Duration: 0:00:02
+2026-04-23 16:29:07 | INFO     | ============================================================
+2026-04-23 16:29:22 | INFO     | ============================================================
+2026-04-23 16:29:22 | INFO     | RUN STARTED: 2026-04-23 16:29:22  |  command: preflight
+2026-04-23 16:29:22 | INFO     | ============================================================
+2026-04-23 16:29:22 | INFO     | Log file: C:\Users\rsytnyk\OneDrive - MicroStrategy, Inc\Documents\CUSTOMERS\Bundesagentur fuer Arbeit\Cloud Migration\python_scripts\wartungsfenster\freigabe_skripte\logs\freigabe_deployment.log
+2026-04-23 16:29:22 | INFO     | 
+2026-04-23 16:29:22 | INFO     | [Preflight 1/5] Validate connectivity to target and source
+2026-04-23 16:29:22 | DEBUG    | Opening connection -> https://controlling-plattform-test.cloud.strategy.com/MicroStrategyLibrary/ (user: s107_ctrl_platform_administrator, project: server-level)
+2026-04-23 16:29:23 | DEBUG    | Connection established
+2026-04-23 16:29:23 | INFO     |   [OK] Connected to target environment
+2026-04-23 16:29:23 | DEBUG    | Connection closed
+2026-04-23 16:29:23 | DEBUG    | Opening connection -> https://controlling.cloud.strategy.com/MicroStrategyLibrary/ (user: s107_ctrl_prd_administrator, project: server-level)
+2026-04-23 16:29:24 | DEBUG    | Connection established
+2026-04-23 16:29:24 | INFO     |   [OK] Connected to source environment
+2026-04-23 16:29:24 | DEBUG    | Connection closed
+2026-04-23 16:29:24 | INFO     | 
+2026-04-23 16:29:24 | INFO     | [Preflight 2/5] Validate project existence on target
+2026-04-23 16:29:24 | DEBUG    | Opening connection -> https://controlling-plattform-test.cloud.strategy.com/MicroStrategyLibrary/ (user: s107_ctrl_platform_administrator, project: server-level)
+2026-04-23 16:29:24 | DEBUG    | Connection established
+2026-04-23 16:29:24 | INFO     |   [OK] Project found: 'SGB II Falke Rechtsbehelfe'
+2026-04-23 16:29:24 | INFO     |   [OK] Project found: 'SGB II S2S'
+2026-04-23 16:29:24 | INFO     |   [OK] Project found: 'SGB II S2S Relational'
+2026-04-23 16:29:25 | INFO     |   [OK] Project found: 'SGB II S2S ZD'
+2026-04-23 16:29:25 | INFO     |   [OK] Project found: 'SGB II S2S ZD CON'
+2026-04-23 16:29:25 | INFO     |   [OK] Project found: 'SGB II MaEnde'
+2026-04-23 16:29:25 | DEBUG    | Connection closed
+2026-04-23 16:29:25 | INFO     | 
+2026-04-23 16:29:25 | INFO     | [Preflight 3/5] Validate security role and group
+2026-04-23 16:29:25 | DEBUG    | Opening connection -> https://controlling-plattform-test.cloud.strategy.com/MicroStrategyLibrary/ (user: s107_ctrl_platform_administrator, project: server-level)
+2026-04-23 16:29:25 | DEBUG    | Connection established
+2026-04-23 16:29:25 | INFO     |   [OK] Security role found: 'Normal Users'
+2026-04-23 16:29:26 | INFO     |   [OK] Security group found: 'SGB II Projektzugriff'
+2026-04-23 16:29:26 | DEBUG    | Connection closed
+2026-04-23 16:29:26 | INFO     | 
+2026-04-23 16:29:26 | INFO     | [Preflight 4/5] Validate DB connections in catalog change list
+2026-04-23 16:29:26 | DEBUG    | Opening connection -> https://controlling-plattform-test.cloud.strategy.com/MicroStrategyLibrary/ (user: s107_ctrl_platform_administrator, project: server-level)
+2026-04-23 16:29:27 | DEBUG    | Connection established
+2026-04-23 16:29:34 | INFO     |   [OK] DB connection found: 'SGB II - S2S - Mn T0 - MSAS@DST_BICOMSTRSQLSVC'
+2026-04-23 16:29:41 | INFO     |   [OK] DB connection found: 'SGB II - S2S - Mn - MSAS@DST_BICOMSTRSQLSVC'
+2026-04-23 16:29:48 | INFO     |   [OK] DB connection found: 'SGB II - Falke Rechtsbehelfe - Falke Rechtsbehelfe - MSAS@DST_BICOMSTRSQLSVC'
+2026-04-23 16:29:55 | INFO     |   [OK] DB connection found: 'SGB II - S2S - S2S - MSAS@DST_BICOMSTRSQLSVC'
+2026-04-23 16:30:02 | INFO     |   [OK] DB connection found: 'SGB II - S2S ZD CON - S2S ZD CON - MSAS@DST_BICOMSTRSQLSVC'
+2026-04-23 16:30:09 | INFO     |   [OK] DB connection found: 'SGB II - S2S ZD - S2S ZD - MSAS@DST_BICOMSTRSQLSVC'
+2026-04-23 16:30:10 | DEBUG    | Connection closed
+2026-04-23 16:30:10 | INFO     | 
+2026-04-23 16:30:10 | INFO     | [Preflight 5/5] Validate merge project configuration
+2026-04-23 16:30:10 | INFO     |   [OK] MERGE_PROJECTS is valid
+2026-04-23 16:30:10 | INFO     | 
+2026-04-23 16:30:10 | INFO     | [SUCCESS] preflight completed successfully
+2026-04-23 16:30:10 | INFO     | Process report: C:\Users\rsytnyk\OneDrive - MicroStrategy, Inc\Documents\CUSTOMERS\Bundesagentur fuer Arbeit\Cloud Migration\python_scripts\wartungsfenster\freigabe_skripte\logs\process_reports\20260423_163010_preflight.json
+2026-04-23 16:30:10 | INFO     | ============================================================
+2026-04-23 16:30:10 | INFO     | RUN FINISHED: 2026-04-23 16:30:10  |  SUCCESS  |  Duration: 0:00:47
+2026-04-23 16:30:10 | INFO     | ============================================================
+2026-04-23 16:33:39 | INFO     | ============================================================
+2026-04-23 16:33:39 | INFO     | RUN STARTED: 2026-04-23 16:33:39  |  command: preflight
+2026-04-23 16:33:39 | INFO     | ============================================================
+2026-04-23 16:33:39 | INFO     | Log file: C:\Users\rsytnyk\OneDrive - MicroStrategy, Inc\Documents\CUSTOMERS\Bundesagentur fuer Arbeit\Cloud Migration\python_scripts\wartungsfenster\freigabe_skripte\logs\freigabe_deployment.log
+2026-04-23 16:33:40 | INFO     | 
+2026-04-23 16:33:40 | INFO     | [Preflight 1/5] Validate connectivity to target and source
+2026-04-23 16:33:40 | DEBUG    | Opening connection -> https://controlling-plattform-test.cloud.strategy.com/MicroStrategyLibrary/ (user: s107_ctrl_platform_administrator, project: server-level)
+2026-04-23 16:33:40 | DEBUG    | Connection established
+2026-04-23 16:33:40 | INFO     |   [OK] Connected to target environment
+2026-04-23 16:33:40 | DEBUG    | Connection closed
+2026-04-23 16:33:41 | DEBUG    | Opening connection -> https://controlling.cloud.strategy.com/MicroStrategyLibrary/ (user: s107_ctrl_prd_administrator, project: server-level)
+2026-04-23 16:33:41 | DEBUG    | Connection established
+2026-04-23 16:33:41 | INFO     |   [OK] Connected to source environment
+2026-04-23 16:33:41 | DEBUG    | Connection closed
+2026-04-23 16:33:41 | INFO     | 
+2026-04-23 16:33:41 | INFO     | [Preflight 2/5] Validate project existence on target
+2026-04-23 16:33:41 | DEBUG    | Opening connection -> https://controlling-plattform-test.cloud.strategy.com/MicroStrategyLibrary/ (user: s107_ctrl_platform_administrator, project: server-level)
+2026-04-23 16:33:42 | DEBUG    | Connection established
+2026-04-23 16:33:42 | INFO     |   [OK] Project found: 'SGB II Falke Rechtsbehelfe'
+2026-04-23 16:33:42 | INFO     |   [OK] Project found: 'SGB II S2S'
+2026-04-23 16:33:42 | INFO     |   [OK] Project found: 'SGB II S2S Relational'
+2026-04-23 16:33:42 | INFO     |   [OK] Project found: 'SGB II S2S ZD'
+2026-04-23 16:33:42 | INFO     |   [OK] Project found: 'SGB II S2S ZD CON'
+2026-04-23 16:33:42 | INFO     |   [OK] Project found: 'SGB II MaEnde'
+2026-04-23 16:33:42 | DEBUG    | Connection closed
+2026-04-23 16:33:42 | INFO     | 
+2026-04-23 16:33:42 | INFO     | [Preflight 3/5] Validate security role and group
+2026-04-23 16:33:42 | DEBUG    | Opening connection -> https://controlling-plattform-test.cloud.strategy.com/MicroStrategyLibrary/ (user: s107_ctrl_platform_administrator, project: server-level)
+2026-04-23 16:33:43 | DEBUG    | Connection established
+2026-04-23 16:33:43 | INFO     |   [OK] Security role found: 'Normal Users'
+2026-04-23 16:33:44 | INFO     |   [OK] Security group found: 'SGB II Projektzugriff'
+2026-04-23 16:33:44 | DEBUG    | Connection closed
+2026-04-23 16:33:44 | INFO     | 
+2026-04-23 16:33:44 | INFO     | [Preflight 4/5] Validate DB connections in catalog change list
+2026-04-23 16:33:44 | DEBUG    | Opening connection -> https://controlling-plattform-test.cloud.strategy.com/MicroStrategyLibrary/ (user: s107_ctrl_platform_administrator, project: server-level)
+2026-04-23 16:33:44 | DEBUG    | Connection established
+2026-04-23 16:33:51 | INFO     |   [OK] DB connection found: 'SGB II - S2S - Mn T0 - MSAS@DST_BICOMSTRSQLSVC'
+2026-04-23 16:33:58 | INFO     |   [OK] DB connection found: 'SGB II - S2S - Mn - MSAS@DST_BICOMSTRSQLSVC'
+2026-04-23 16:34:05 | INFO     |   [OK] DB connection found: 'SGB II - Falke Rechtsbehelfe - Falke Rechtsbehelfe - MSAS@DST_BICOMSTRSQLSVC'
+2026-04-23 16:34:12 | INFO     |   [OK] DB connection found: 'SGB II - S2S - S2S - MSAS@DST_BICOMSTRSQLSVC'
+2026-04-23 16:34:20 | INFO     |   [OK] DB connection found: 'SGB II - S2S ZD CON - S2S ZD CON - MSAS@DST_BICOMSTRSQLSVC'
+2026-04-23 16:34:26 | INFO     |   [OK] DB connection found: 'SGB II - S2S ZD - S2S ZD - MSAS@DST_BICOMSTRSQLSVC'
+2026-04-23 16:34:26 | DEBUG    | Connection closed
+2026-04-23 16:34:26 | INFO     | 
+2026-04-23 16:34:26 | INFO     | [Preflight 5/5] Validate merge project configuration
+2026-04-23 16:34:26 | INFO     |   [OK] MERGE_PROJECTS is valid
+2026-04-23 16:34:26 | INFO     | 
+2026-04-23 16:34:26 | INFO     | [SUCCESS] preflight completed successfully
+2026-04-23 16:34:26 | INFO     | Process report: C:\Users\rsytnyk\OneDrive - MicroStrategy, Inc\Documents\CUSTOMERS\Bundesagentur fuer Arbeit\Cloud Migration\python_scripts\wartungsfenster\freigabe_skripte\logs\process_reports\20260423_163426_preflight.json
+2026-04-23 16:34:26 | INFO     | ============================================================
+2026-04-23 16:34:26 | INFO     | RUN FINISHED: 2026-04-23 16:34:26  |  SUCCESS  |  Duration: 0:00:47
+2026-04-23 16:34:26 | INFO     | ============================================================
