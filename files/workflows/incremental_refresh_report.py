@@ -69,11 +69,11 @@ LOGIN_MODE  = int(os.getenv("MSTR_LOGIN_MODE", "1"))
 PROJECT     = os.getenv("MSTR_PROJECT_NAME", "Your Project")
 
 # ID of the IncrementalRefreshReport to execute
-IRR_ID      = os.getenv("IRR_ID", "")
+IRR_ID      = os.getenv("IRR_ID", "A2E990E9493E3319526663A8FAD998A5")
 
 # ID of the target OlapCube that the IRR refreshes (used for Strategy C)
 # Leave empty to skip the timestamp check.
-TARGET_CUBE_ID = os.getenv("TARGET_CUBE_ID", "")
+TARGET_CUBE_ID = os.getenv("E3CE909FA9490EE28D63C080EDB9B2B1", "")
 
 # Polling settings for Strategy B
 JOB_POLL_INTERVAL_S = 10   # seconds between status polls
