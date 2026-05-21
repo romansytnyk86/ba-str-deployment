@@ -218,6 +218,80 @@ PLAN = {
 `get_project_group()` falls back gracefully — if the name is not a defined group
 it returns `[name]`, so you can pass individual project names the same way:
 
+## Project Groups For CLI Execution
+
+The `versorgung` CLI can run an existing workflow for a named **project group**.
+The primary place to manage groups is now the active `deployment.env`.
+
+### Preferred: groups in deployment.env
+
+Define project groups in the same env file used for execution (for routing this
+is the source env file, e.g. `deployment_design.env`):
+
+```env
+PROJECT_GROUPS=SmokeTest=Betriebsnummernservice|SGB II S2S|SGB II MaEnde;SGBIIOnly=SGB II S2S|SGB II S2S ZD
+PROJECTS=@SmokeTest
+```
+
+- Groups are separated by `;`
+- Projects inside a group are separated by `|`
+- Members are project names (not file names)
+- `PROJECTS` supports direct project names and `@GroupName` references
+
+This mirrors the wartungsfenster style:
+- `--project-group SmokeTest` runs the selected group directly
+- If `PROJECTS` contains multiple entries, the CLI runs them sequentially even without `--project-group`
+
+### Optional fallback file
+
+Create `files/project_groups.env` with a `PROJECT_GROUPS` entry:
+
+```env
+PROJECT_GROUPS=SmokeTest=deployment_design_s2s.env|deployment_design_falke.env|deployment_design_maende.env;SGBIIOnly=deployment_design_s2s.env|deployment_design_relational.env
+```
+
+- This file is only used when the group is not found in the active `deployment.env`
+- Members in this file are env file names (legacy/fallback mode)
+- Relative paths are resolved relative to `files/project_groups.env`
+
+### Show available groups
+
+```bash
+python main.py --show-project-groups
+python main.py --show-project-groups --groups-file custom_project_groups.env
+```
+
+### Run a group with routing
+
+Example: duplicate backups on `Design -> Design` for only the projects in `SmokeTest`:
+
+```bash
+python main.py --source-env Design --target-env Design --backup-month 202604 --project-group SmokeTest --dry-run
+python main.py --source-env Design --target-env Design --backup-month 202604 --project-group SmokeTest
+```
+
+Example: run a cross-environment group route:
+
+```bash
+python main.py --source-env Design --target-env Integration --backup-month 202604 --project-group SmokeTest --dry-run
+```
+
+### Run a group without routing
+
+If you do not use `--source-env` / `--target-env`, the active `--env` file is used.
+For deployment.env-managed groups, project names come from `PROJECTS` or from
+`--project-group` lookup in the same env file.
+
+```bash
+python main.py --project-group SmokeTest --dry-run
+python main.py --project-group SmokeTest
+```
+
+### Important limitation
+
+CLI project groups do **not** read `PROJECT_GROUPS` from `plan_template.py`.
+The release-plan template is still documentation and planning support.
+
 ```python
 "cache_cleanup_projects": get_project_group("SGB II S2S Relational"),
 # → ["SGB II S2S Relational"]

@@ -64,6 +64,7 @@ class AppConfig:
     enable_db_catalog_change: bool = True
     enable_schema_update: bool = False
     enable_security_role_revocation: bool = True
+    projects: list[str] = field(default_factory=list)
 
 
 # ── Internal helpers ──────────────────────────────────────────────────────────
@@ -106,6 +107,74 @@ def _parse_bool(raw: Optional[str], default: bool) -> bool:
     if value in {"0", "false", "no", "n", "off"}:
         return False
     return default
+
+
+def _parse_list(raw: Optional[str]) -> list[str]:
+    """Parse a comma-separated list and remove empty entries."""
+    if not raw:
+        return []
+    return [x.strip() for x in raw.split(",") if x.strip()]
+
+
+def _parse_project_groups(raw: Optional[str]) -> dict[str, list[str]]:
+    """
+    Parse PROJECT_GROUPS from deployment.env.
+
+    Format:
+      Group A=Project 1|Project 2;Group B=Project 3
+    """
+    groups: dict[str, list[str]] = {}
+    if not raw:
+        return groups
+
+    for entry in raw.split(";"):
+        entry = entry.strip()
+        if not entry:
+            continue
+        if "=" not in entry:
+            continue
+
+        group_name, members_raw = entry.split("=", 1)
+        name = group_name.strip()
+        members = [p.strip() for p in members_raw.split("|") if p.strip()]
+        if name and members:
+            groups[name] = members
+
+    return groups
+
+
+def _expand_project_tokens(
+    items: list[str],
+    groups: dict[str, list[str]],
+    env_file: str,
+    field_name: str,
+) -> list[str]:
+    """
+    Expand @GroupName tokens and deduplicate while preserving order.
+    """
+    expanded: list[str] = []
+    seen: set[str] = set()
+
+    for item in items:
+        if item.startswith("@"):
+            group_name = item[1:].strip()
+            group_projects = groups.get(group_name)
+            if group_projects is None:
+                print(
+                    f"[ERROR] Unknown project group '{group_name}' used in {field_name} "
+                    f"in {env_file}. Define it in PROJECT_GROUPS."
+                )
+                sys.exit(1)
+            for project_name in group_projects:
+                if project_name not in seen:
+                    expanded.append(project_name)
+                    seen.add(project_name)
+        else:
+            if item not in seen:
+                expanded.append(item)
+                seen.add(item)
+
+    return expanded
 
 
 # ── Public loader ─────────────────────────────────────────────────────────────
@@ -162,6 +231,15 @@ def load_config(env_file: str = "deployment.env") -> AppConfig:
 
     # ── Sections 2-5: Project, backup, DB connection, security roles ──
     project_name = _require("MSTR_PROJECT_NAME", v.get("MSTR_PROJECT_NAME"), env_file)
+    project_groups = _parse_project_groups(v.get("PROJECT_GROUPS"))
+    projects = _expand_project_tokens(
+        _parse_list(v.get("PROJECTS")),
+        project_groups,
+        env_file,
+        "PROJECTS",
+    )
+    if not projects:
+        projects = [project_name]
 
     project = ProjectConfig(
         project_name=project_name,
@@ -203,4 +281,5 @@ def load_config(env_file: str = "deployment.env") -> AppConfig:
         enable_db_catalog_change=v.get("ENABLE_DB_CATALOG_CHANGE", "true").lower() == "true",
         enable_schema_update=v.get("ENABLE_SCHEMA_UPDATE", "false").lower() == "true",
         enable_security_role_revocation=v.get("ENABLE_SECURITY_ROLE_REVOCATION", "true").lower() == "true",
+        projects=projects,
     )
